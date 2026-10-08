@@ -15,10 +15,35 @@ const display = Barlow_Condensed({
   weight: ["700", "800"],
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
+const description =
+  "Customized hoodies, T-shirts, jerseys, polos, tumblers, bottles and mugs. Based in Kenya and Oman, shipping worldwide.";
+
 export const metadata: Metadata = {
-  title: "Arwas World | Comfy, customized apparel and drinkware",
-  description:
-    "Customized hoodies, T-shirts, jerseys, polos, tumblers, bottles and mugs. Based in Kenya and Oman, shipping worldwide.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Arwas World | Comfy, customized apparel and drinkware",
+    template: "%s | Arwas World",
+  },
+  description,
+  applicationName: "Arwas World",
+  openGraph: {
+    type: "website",
+    siteName: "Arwas World",
+    title: "Arwas World | Comfy, customized apparel and drinkware",
+    description,
+    locale: "en_KE",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Arwas World",
+    description,
+  },
 };
 
 export const viewport: Viewport = {
