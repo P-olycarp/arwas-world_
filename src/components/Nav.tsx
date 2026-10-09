@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { waLink } from "@/data/products";
+import { waLinkTo } from "@/data/products";
 
 const links = [
   { href: "#studio", label: "3D studio" },
@@ -11,7 +11,8 @@ const links = [
   { href: "#markets", label: "Where we ship" },
 ];
 
-export default function Nav() {
+export default function Nav({ whatsapp }: { whatsapp: string }) {
+  const waLink = (m: string) => waLinkTo(whatsapp, m);
   const [open, setOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
 

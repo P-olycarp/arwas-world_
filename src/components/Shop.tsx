@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { ArrowUpRight, Box } from "lucide-react";
-import { waLink, type Product } from "@/data/products";
+import { waLinkTo, type Product } from "@/data/products";
 import { Reveal } from "./Reveal";
 
 type Filter = "all" | "apparel" | "drinkware";
@@ -98,7 +98,14 @@ function selectInStudio(id: Product["id"]) {
   document.getElementById("studio")?.scrollIntoView({ behavior: "smooth" });
 }
 
-export default function Shop({ products: PRODUCTS }: { products: Product[] }) {
+export default function Shop({
+  products: PRODUCTS,
+  whatsapp,
+}: {
+  products: Product[];
+  whatsapp: string;
+}) {
+  const waLink = (m: string) => waLinkTo(whatsapp, m);
   const [filter, setFilter] = useState<Filter>("all");
 
   const items = PRODUCTS.filter((p) => {

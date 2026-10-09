@@ -1,7 +1,7 @@
-import { waLink } from "@/data/products";
+import { waLinkTo } from "@/data/products";
 import { Reveal } from "./Reveal";
 
-export default function Cta() {
+export default function Cta({ whatsapp }: { whatsapp: string }) {
   return (
     <section
       aria-labelledby="cta-title"
@@ -16,7 +16,7 @@ export default function Cta() {
             Let&rsquo;s make something with your name on it
           </h2>
           <a
-            href={waLink("Hi Arwas World, I would like to place a custom order.")}
+            href={waLinkTo(whatsapp, "Hi Arwas World, I would like to place a custom order.")}
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-inverse"

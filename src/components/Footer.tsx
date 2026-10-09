@@ -1,4 +1,4 @@
-import { waLink } from "@/data/products";
+import { waLinkTo } from "@/data/products";
 
 const links = [
   { href: "#studio", label: "3D studio" },
@@ -7,16 +7,13 @@ const links = [
   { href: "#markets", label: "Where we ship" },
 ];
 
-export default function Footer() {
+export default function Footer({ whatsapp, blurb }: { whatsapp: string; blurb: string }) {
   return (
     <footer className="border-t border-line bg-surface">
       <div className="mx-auto grid max-w-[1200px] gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.5fr_1fr_1fr]">
         <div>
           <p className="text-body-lg font-semibold">Arwas World</p>
-          <p className="mt-2 max-w-[28em] text-body-lg text-muted">
-            Comfy, customized apparel and drinkware. Based in Kenya and Oman,
-            shipping worldwide.
-          </p>
+          <p className="mt-2 max-w-[28em] text-body-lg text-muted">{blurb}</p>
         </div>
         <nav aria-label="Footer">
           <h2 className="mb-2 text-body-lg font-semibold">Explore</h2>
@@ -36,7 +33,7 @@ export default function Footer() {
         <div>
           <h2 className="mb-2 text-body-lg font-semibold">Contact</h2>
           <a
-            href={waLink("Hi Arwas World, I have a question.")}
+            href={waLinkTo(whatsapp, "Hi Arwas World, I have a question.")}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-11 items-center text-body-lg link"

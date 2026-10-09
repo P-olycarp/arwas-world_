@@ -1,6 +1,6 @@
 import { Reveal } from "./Reveal";
 
-export default function Hero() {
+export default function Hero({ intro }: { intro: string }) {
   return (
     <section
       aria-labelledby="hero-title"
@@ -22,9 +22,7 @@ export default function Hero() {
       </Reveal>
       <Reveal delay={0.14}>
         <p className="mx-auto mb-8 mt-6 max-w-[36em] text-subtitle text-muted">
-          Hoodies, T-shirts, jerseys and polos, plus tumblers, bottles and mugs,
-          made with your name, team or brand on them. We ship from Kenya and
-          Oman to the world.
+          {intro}
         </p>
       </Reveal>
       <Reveal delay={0.22}>

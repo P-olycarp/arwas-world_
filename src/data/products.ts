@@ -142,3 +142,6 @@ const SEED: SeedProduct[] = [
 type SeedProduct = Omit<Product, "id" | "kind"> & { id: ProductKind };
 
 export const PRODUCTS: Product[] = SEED.map((p) => ({ ...p, kind: p.id }));
+
+export const waLinkTo = (number: string, message: string) =>
+  `https://wa.me/${number}?text=${encodeURIComponent(message)}`;

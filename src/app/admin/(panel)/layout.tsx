@@ -12,6 +12,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
             <span className="mr-3 font-semibold">Arwas World admin</span>
             <Link href="/admin/products" className="btn btn-subtle !px-3">Products</Link>
             <Link href="/admin/enquiries" className="btn btn-subtle !px-3">Enquiries</Link>
+            <Link href="/admin/settings" className="btn btn-subtle !px-3">Settings</Link>
             <Link href="/" target="_blank" rel="noopener noreferrer" className="btn btn-subtle !px-3">
               View site
             </Link>
