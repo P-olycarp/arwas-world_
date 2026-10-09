@@ -8,8 +8,12 @@ import Markets from "@/components/Markets";
 import Cta from "@/components/Cta";
 import Footer from "@/components/Footer";
 import MotionProvider from "@/components/MotionProvider";
+import { getProducts } from "@/lib/catalog";
 
-export default function Home() {
+export const revalidate = 300;
+
+export default async function Home() {
+  const products = await getProducts();
   return (
     <MotionProvider>
       <a href="#main" className="skip-link">
@@ -18,8 +22,8 @@ export default function Home() {
       <Nav />
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
-        <Studio />
-        <Shop />
+        <Studio products={products} />
+        <Shop products={products} />
         <Craft />
         <Process />
         <Markets />

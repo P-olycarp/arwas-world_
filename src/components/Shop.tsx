@@ -3,12 +3,12 @@
 import Image from "next/image";
 import { useState } from "react";
 import { ArrowUpRight, Box } from "lucide-react";
-import { PRODUCTS, waLink, type Product } from "@/data/products";
+import { waLink, type Product } from "@/data/products";
 import { Reveal } from "./Reveal";
 
 type Filter = "all" | "apparel" | "drinkware";
 
-const APPAREL: Product["id"][] = ["hoodie", "tee", "polo", "jersey"];
+const APPAREL: Product["kind"][] = ["hoodie", "tee", "polo", "jersey"];
 
 const FILTERS: { id: Filter; label: string }[] = [
   { id: "all", label: "All" },
@@ -18,7 +18,7 @@ const FILTERS: { id: Filter; label: string }[] = [
 
 const TINTS = ["var(--kenya)", "var(--gold)", "var(--oman)", "var(--sky)"];
 
-function Silhouette({ id }: { id: Product["id"] }) {
+function Silhouette({ id }: { id: Product["kind"] }) {
   const common = {
     fill: "currentColor",
     stroke: "var(--foreground)",
@@ -98,12 +98,12 @@ function selectInStudio(id: Product["id"]) {
   document.getElementById("studio")?.scrollIntoView({ behavior: "smooth" });
 }
 
-export default function Shop() {
+export default function Shop({ products: PRODUCTS }: { products: Product[] }) {
   const [filter, setFilter] = useState<Filter>("all");
 
   const items = PRODUCTS.filter((p) => {
     if (filter === "all") return true;
-    const isApparel = APPAREL.includes(p.id);
+    const isApparel = APPAREL.includes(p.kind);
     return filter === "apparel" ? isApparel : !isApparel;
   });
 
@@ -169,7 +169,7 @@ export default function Shop() {
                       className="object-cover"
                     />
                   ) : (
-                    <Silhouette id={p.id} />
+                    <Silhouette id={p.kind} />
                   )}
                 </div>
                 <div className="flex flex-1 flex-col gap-1 p-5">

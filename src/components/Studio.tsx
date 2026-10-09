@@ -4,15 +4,15 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { COLORS, PRODUCTS, waLink, type Product } from "@/data/products";
+import { COLORS, waLink, type Product } from "@/data/products";
 
 const ProductStage = dynamic(() => import("./ProductStage"), {
   ssr: false,
   loading: () => <div className="h-full w-full" aria-hidden />,
 });
 
-export default function Studio() {
-  const [productId, setProductId] = useState<Product["id"]>("hoodie");
+export default function Studio({ products: PRODUCTS }: { products: Product[] }) {
+  const [productId, setProductId] = useState<Product["id"]>(PRODUCTS[0].id);
   const [color, setColor] = useState<(typeof COLORS)[number]>(COLORS[0]);
   const [text, setText] = useState("Arwas");
   const tabRefs = useRef<Partial<Record<Product["id"], HTMLButtonElement | null>>>({});

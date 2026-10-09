@@ -12,7 +12,7 @@ import {
   type ReactNode,
 } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import type { Product } from "@/data/products";
 
@@ -316,7 +316,28 @@ function Mug({ color, texture }: ModelProps) {
   );
 }
 
-function Placeholder({ id, ...rest }: ModelProps & { id: Product["id"] }) {
+function PhotoCard({ url }: { url: string }) {
+  const map = useTexture(url, (t) => {
+    t.colorSpace = THREE.SRGBColorSpace;
+  });
+  const img = map.image as { width: number; height: number };
+  const aspect = img.width / img.height;
+  const w = aspect >= 1 ? 4.4 : 4.4 * aspect;
+  const h = aspect >= 1 ? 4.4 / aspect : 4.4;
+  return (
+    <mesh>
+      <planeGeometry args={[w, h]} />
+      <meshBasicMaterial map={map} side={THREE.DoubleSide} toneMapped={false} />
+    </mesh>
+  );
+}
+
+function Placeholder({
+  id,
+  image,
+  ...rest
+}: ModelProps & { id: Product["kind"]; image?: string }) {
+  if (image) return <PhotoCard url={image} />;
   switch (id) {
     case "hoodie":
       return <Hoodie {...rest} />;
@@ -465,7 +486,8 @@ export default function ProductStage({ product, color, text }: Props) {
                 <GltfModel path={product.model} />
               ) : (
                 <Placeholder
-                  id={product.id}
+                  id={product.kind}
+                  image={product.image}
                   color={color}
                   ink={ink}
                   texture={texture}

@@ -8,7 +8,8 @@ export type ProductKind =
   | "mug";
 
 export type Product = {
-  id: ProductKind;
+  id: string;
+  kind: ProductKind;
   name: string;
   tagline: string;
   description: string;
@@ -37,7 +38,7 @@ export const COLORS = [
   { name: "Navy", hex: "#1f3357" },
 ] as const;
 
-export const PRODUCTS: Product[] = [
+const SEED: SeedProduct[] = [
   {
     id: "hoodie",
     name: "Hoodies",
@@ -137,3 +138,7 @@ export const PRODUCTS: Product[] = [
     offsetY: 0,
   },
 ];
+
+type SeedProduct = Omit<Product, "id" | "kind"> & { id: ProductKind };
+
+export const PRODUCTS: Product[] = SEED.map((p) => ({ ...p, kind: p.id }));
