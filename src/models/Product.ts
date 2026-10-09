@@ -6,6 +6,14 @@ const specSchema = new Schema(
   { _id: false },
 );
 
+const mediaSchema = new Schema(
+  {
+    kind: { type: String, enum: ["image", "video"], required: true },
+    url: { type: String, required: true },
+  },
+  { _id: false },
+);
+
 const productSchema = new Schema(
   {
     slug: { type: String, required: true, unique: true, trim: true, lowercase: true },
@@ -16,6 +24,7 @@ const productSchema = new Schema(
     specs: { type: [specSchema], default: [] },
     price: { type: String, default: "", trim: true },
     image: { type: String, default: "" },
+    media: { type: [mediaSchema], default: [] },
     model: { type: String, default: "" },
     scale: { type: Number, default: 1 },
     offsetY: { type: Number, default: 0 },

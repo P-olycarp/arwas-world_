@@ -1,6 +1,6 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import Studio from "@/components/Studio";
+import Showcase from "@/components/Showcase";
 import Shop from "@/components/Shop";
 import Craft from "@/components/Craft";
 import Process from "@/components/Process";
@@ -25,7 +25,7 @@ export default async function Home() {
       <Nav whatsapp={settings.whatsapp} />
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero intro={settings.heroIntro} />
-        <Studio products={products} whatsapp={settings.whatsapp} />
+        <Showcase products={products} whatsapp={settings.whatsapp} />
         <Shop products={products} whatsapp={settings.whatsapp} />
         <Craft />
         <Process />

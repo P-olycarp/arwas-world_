@@ -13,18 +13,18 @@ import type { FormState } from "@/lib/form-state";
 
 const text = (max: number) => z.string().trim().max(max);
 
-const blobUrl = z
-  .string()
-  .trim()
-  .refine((u) => {
-    if (u === "") return true;
-    try {
-      const x = new URL(u);
-      return x.protocol === "https:" && x.hostname.endsWith(".public.blob.vercel-storage.com");
-    } catch {
-      return false;
-    }
-  }, "Use the upload button to add photos and 3D models.");
+const blobUrl = z.string().trim().refine((u) => {
+  try {
+    const x = new URL(u);
+    return x.protocol === "https:" && x.hostname.endsWith(".public.blob.vercel-storage.com");
+  } catch {
+    return false;
+  }
+}, "Use the upload button to add photos and videos.");
+
+const mediaList = z
+  .array(z.object({ kind: z.enum(["image", "video"]), url: blobUrl }))
+  .max(12, "Add up to 12 photos and videos.");
 
 const schema = z.object({
   name: text(80).min(2, "Enter a product name."),
@@ -33,19 +33,11 @@ const schema = z.object({
   tagline: text(120).min(2, "Enter a tagline."),
   description: text(600).min(10, "Enter a description of at least 10 characters."),
   price: text(40),
-  image: blobUrl,
-  model: blobUrl,
-  scale: z.coerce.number().min(0.1, "Scale must be between 0.1 and 10.").max(10, "Scale must be between 0.1 and 10."),
-  offsetY: z.coerce.number().min(-10, "Vertical offset must be between -10 and 10.").max(10, "Vertical offset must be between -10 and 10."),
   sortOrder: z.coerce.number().int("Sort order must be a whole number.").min(0).max(9999),
 });
 
 function slugify(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 60);
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
 }
 
 export async function saveProduct(id: string | null, formData: FormData): Promise<FormState> {
@@ -60,14 +52,21 @@ export async function saveProduct(id: string | null, formData: FormData): Promis
     tagline: get("tagline"),
     description: get("description"),
     price: get("price"),
-    image: get("image"),
-    model: get("model"),
-    scale: get("scale"),
-    offsetY: get("offsetY"),
     sortOrder: get("sortOrder"),
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Check the form and try again." };
+  }
+
+  let rawMedia: unknown = [];
+  try {
+    rawMedia = JSON.parse(get("media") || "[]");
+  } catch {
+    return { error: "The media list is invalid. Reload the page and try again." };
+  }
+  const media = mediaList.safeParse(rawMedia);
+  if (!media.success) {
+    return { error: media.error.issues[0]?.message ?? "The media list is invalid." };
   }
 
   const specs = [0, 1, 2, 3]
@@ -77,7 +76,13 @@ export async function saveProduct(id: string | null, formData: FormData): Promis
     }))
     .filter((s) => s.label && s.value);
 
-  const data = { ...parsed.data, specs, published: formData.get("published") === "on" };
+  const data = {
+    ...parsed.data,
+    specs,
+    media: media.data,
+    image: media.data.find((m) => m.kind === "image")?.url ?? "",
+    published: formData.get("published") === "on",
+  };
 
   try {
     await connectDb();
@@ -125,9 +130,7 @@ export async function seedProducts(): Promise<void> {
         specs: p.specs,
         price: p.price ?? "",
         image: p.image ?? "",
-        model: p.model ?? "",
-        scale: p.scale,
-        offsetY: p.offsetY,
+        media: p.image ? [{ kind: "image", url: p.image }] : [],
         published: true,
         sortOrder: i,
       })),

@@ -5,7 +5,7 @@ import { Menu, X } from "lucide-react";
 import { waLinkTo } from "@/data/products";
 
 const links = [
-  { href: "#studio", label: "3D studio" },
+  { href: "#studio", label: "Showcase" },
   { href: "#shop", label: "Shop" },
   { href: "#custom", label: "Customizing" },
   { href: "#markets", label: "Where we ship" },

@@ -197,7 +197,7 @@ export default function Shop({
                       className="btn btn-secondary !px-4"
                     >
                       <Box size={18} aria-hidden />
-                      Customize in 3D
+                      View gallery
                     </button>
                     <a
                       href={waLink(`Hi Arwas World, I would like to order ${p.name}.`)}

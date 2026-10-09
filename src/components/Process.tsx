@@ -4,7 +4,7 @@ import SectionHeading from "./SectionHeading";
 const steps = [
   {
     title: "Choose",
-    body: "Select a product and colour in the studio and see it in 3D.",
+    body: "Browse the showcase and pick a product.",
     color: "var(--kenya)",
   },
   {

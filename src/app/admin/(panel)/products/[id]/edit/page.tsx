@@ -27,6 +27,13 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
     description: doc.description,
     price: doc.price ?? "",
     image: doc.image ?? "",
+    media: (() => {
+      const list = (doc.media ?? []).map((m) => ({
+        kind: m.kind as "image" | "video",
+        url: m.url ?? "",
+      }));
+      return list.length === 0 && doc.image ? [{ kind: "image" as const, url: doc.image }] : list;
+    })(),
     model: doc.model ?? "",
     scale: doc.scale ?? 1,
     offsetY: doc.offsetY ?? 0,

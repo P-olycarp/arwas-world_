@@ -356,10 +356,42 @@ function Placeholder({
 
 /* ---------- real models (.glb) ---------- */
 
-function GltfModel({ path }: { path: string }) {
+function GltfModel({
+  path,
+  color,
+  texture,
+}: {
+  path: string;
+  color: string;
+  texture: THREE.Texture;
+}) {
   const { scene } = useGLTF(path);
-  const model = useMemo(() => {
+  const { model, tinted } = useMemo(() => {
     const clone = scene.clone(true);
+    const tinted: THREE.MeshStandardMaterial[] = [];
+    clone.traverse((o) => {
+      const mesh = o as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      const n = mesh.name.toLowerCase();
+      if (n.startsWith("print")) {
+        mesh.material = new THREE.MeshStandardMaterial({
+          map: texture,
+          transparent: true,
+          roughness: 0.9,
+          polygonOffset: true,
+          polygonOffsetFactor: -2,
+        });
+        return;
+      }
+      if (n.startsWith("keep") || n.startsWith("trim")) return;
+      const list = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      const copies = list.map((m) => {
+        const c = m.clone();
+        if ("color" in c) tinted.push(c as THREE.MeshStandardMaterial);
+        return c;
+      });
+      mesh.material = Array.isArray(mesh.material) ? copies : copies[0];
+    });
     const box = new THREE.Box3().setFromObject(clone);
     const size = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
@@ -367,11 +399,15 @@ function GltfModel({ path }: { path: string }) {
     const wrapper = new THREE.Group();
     wrapper.add(clone);
     wrapper.scale.setScalar(4 / Math.max(size.y, 0.0001));
-    return wrapper;
-  }, [scene]);
+    return { model: wrapper, tinted };
+  }, [scene, texture]);
+
+  useLayoutEffect(() => {
+    tinted.forEach((m) => m.color.set(color));
+  }, [tinted, color]);
+
   return <primitive object={model} />;
 }
-
 /* ---------- motion rig and camera ---------- */
 
 function Rig({
@@ -483,7 +519,7 @@ export default function ProductStage({ product, color, text }: Props) {
               target={product.scale}
             >
               {product.model ? (
-                <GltfModel path={product.model} />
+                <GltfModel path={product.model} color={color} texture={texture} />
               ) : (
                 <Placeholder
                   id={product.kind}

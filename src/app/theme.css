@@ -174,3 +174,12 @@ body {
   font-size: 1.25rem;
   line-height: 1.2;
 }
+
+/* Slow zoom on showcase photos (disabled by the reduced-motion rule in globals.css) */
+@keyframes kenburns {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+.kenburns {
+  animation: kenburns 14s ease-out both;
+}

@@ -7,6 +7,8 @@ export type ProductKind =
   | "bottle"
   | "mug";
 
+export type MediaItem = { kind: "image" | "video"; url: string };
+
 export type Product = {
   id: string;
   kind: ProductKind;
@@ -22,6 +24,7 @@ export type Product = {
   price?: string;
   /** Optional photo in /public/products, for example "/products/hoodie.jpg". */
   image?: string;
+  media?: MediaItem[];
 };
 
 export const WHATSAPP_NUMBER = "254115003996";
