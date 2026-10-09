@@ -8,6 +8,7 @@ import Markets from "@/components/Markets";
 import Cta from "@/components/Cta";
 import Footer from "@/components/Footer";
 import MotionProvider from "@/components/MotionProvider";
+import EnquiryTracker from "@/components/EnquiryTracker";
 import { getProducts } from "@/lib/catalog";
 
 export const revalidate = 300;
@@ -19,6 +20,7 @@ export default async function Home() {
       <a href="#main" className="skip-link">
         Skip to main content
       </a>
+      <EnquiryTracker />
       <Nav />
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero />

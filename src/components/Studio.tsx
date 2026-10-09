@@ -188,6 +188,10 @@ export default function Studio({ products: PRODUCTS }: { products: Product[] }) 
 
               <a
                 href={orderLink}
+                data-source="studio"
+                data-product={product.name}
+                data-colour={color.name}
+                data-print={printText}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary self-start"

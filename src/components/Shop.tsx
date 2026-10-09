@@ -194,6 +194,8 @@ export default function Shop({ products: PRODUCTS }: { products: Product[] }) {
                     </button>
                     <a
                       href={waLink(`Hi Arwas World, I would like to order ${p.name}.`)}
+                      data-source="shop"
+                      data-product={p.name}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn btn-subtle !px-3"
