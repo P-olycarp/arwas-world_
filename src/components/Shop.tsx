@@ -2,20 +2,14 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { ArrowUpRight, Box } from "lucide-react";
+import { ArrowUpRight, Images } from "lucide-react";
 import { waLinkTo, type Product } from "@/data/products";
+import { DICT, type Lang } from "@/lib/i18n";
 import { Reveal } from "./Reveal";
 
 type Filter = "all" | "apparel" | "drinkware";
 
 const APPAREL: Product["kind"][] = ["hoodie", "tee", "polo", "jersey"];
-
-const FILTERS: { id: Filter; label: string }[] = [
-  { id: "all", label: "All" },
-  { id: "apparel", label: "Apparel" },
-  { id: "drinkware", label: "Drinkware" },
-];
-
 const TINTS = ["var(--kenya)", "var(--gold)", "var(--oman)", "var(--sky)"];
 
 function Silhouette({ id }: { id: Product["kind"] }) {
@@ -36,26 +30,17 @@ function Silhouette({ id }: { id: Product["kind"] }) {
   return (
     <svg viewBox="0 0 100 100" className="h-full w-full" aria-hidden>
       {id === "tee" && (
-        <path
-          {...common}
-          d="M35 12 Q50 24 65 12 L90 24 L82 42 L72 37 V88 H28 V37 L18 42 L10 24 Z"
-        />
+        <path {...common} d="M35 12 Q50 24 65 12 L90 24 L82 42 L72 37 V88 H28 V37 L18 42 L10 24 Z" />
       )}
       {id === "polo" && (
         <>
-          <path
-            {...common}
-            d="M35 12 Q50 24 65 12 L90 24 L82 42 L72 37 V88 H28 V37 L18 42 L10 24 Z"
-          />
+          <path {...common} d="M35 12 Q50 24 65 12 L90 24 L82 42 L72 37 V88 H28 V37 L18 42 L10 24 Z" />
           <path {...detail} d="M35 12 L44 26 L50 20 L56 26 L65 12 M50 20 V40" />
         </>
       )}
       {id === "jersey" && (
         <>
-          <path
-            {...common}
-            d="M33 12 L50 34 L67 12 L90 24 L82 42 L72 37 V88 H28 V37 L18 42 L10 24 Z"
-          />
+          <path {...common} d="M33 12 L50 34 L67 12 L90 24 L82 42 L72 37 V88 H28 V37 L18 42 L10 24 Z" />
           <path {...detail} d="M28 62 H72 M28 70 H72" />
         </>
       )}
@@ -75,44 +60,45 @@ function Silhouette({ id }: { id: Product["kind"] }) {
           <path {...detail} strokeWidth={2.5} strokeLinecap="round" d="M54 18 L60 4" />
         </>
       )}
-      {id === "bottle" && (
-        <path {...common} d="M42 6 H58 V18 L67 30 V92 H33 V30 L42 18 Z" />
-      )}
+      {id === "bottle" && <path {...common} d="M42 6 H58 V18 L67 30 V92 H33 V30 L42 18 Z" />}
       {id === "mug" && (
         <>
           <path {...common} d="M20 28 H68 V76 Q68 88 56 88 H32 Q20 88 20 76 Z" />
-          <path
-            {...detail}
-            strokeWidth={5}
-            strokeLinecap="round"
-            d="M68 38 H76 Q86 38 86 50 Q86 62 76 62 H68"
-          />
+          <path {...detail} strokeWidth={5} strokeLinecap="round" d="M68 38 H76 Q86 38 86 50 Q86 62 76 62 H68" />
         </>
       )}
     </svg>
   );
 }
 
-function selectInStudio(id: Product["id"]) {
+function selectInShowcase(id: string) {
   window.dispatchEvent(new CustomEvent("arwas:select", { detail: id }));
   document.getElementById("studio")?.scrollIntoView({ behavior: "smooth" });
 }
 
 export default function Shop({
-  products: PRODUCTS,
+  products,
   whatsapp,
+  lang,
 }: {
   products: Product[];
   whatsapp: string;
+  lang: Lang;
 }) {
-  const waLink = (m: string) => waLinkTo(whatsapp, m);
+  const t = DICT[lang].shop;
   const [filter, setFilter] = useState<Filter>("all");
 
-  const items = PRODUCTS.filter((p) => {
+  const items = products.filter((p) => {
     if (filter === "all") return true;
     const isApparel = APPAREL.includes(p.kind);
     return filter === "apparel" ? isApparel : !isApparel;
   });
+
+  const filters: { id: Filter; label: string }[] = [
+    { id: "all", label: t.all },
+    { id: "apparel", label: t.apparel },
+    { id: "drinkware", label: t.drinkware },
+  ];
 
   return (
     <section
@@ -123,19 +109,12 @@ export default function Shop({
       <Reveal>
         <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-[40rem]">
-            <p className="mb-2 text-body font-semibold uppercase tracking-wider text-brand">
-              Shop
-            </p>
-            <h2 id="shop-title" className="text-title1 font-semibold tracking-tight">
-              Shop the range
-            </h2>
-            <p className="mt-3 text-body-lg text-muted">
-              Every piece can carry your name, team or brand. Open one in 3D to
-              try colours and print, or message us to order.
-            </p>
+            <p className="mb-2 text-body font-semibold uppercase tracking-wider text-brand">{t.eyebrow}</p>
+            <h2 id="shop-title" className="text-title1 font-semibold tracking-tight">{t.title}</h2>
+            <p className="mt-3 text-body-lg text-muted">{t.intro}</p>
           </div>
-          <div role="group" aria-label="Filter products" className="flex gap-2">
-            {FILTERS.map((f) => (
+          <div role="group" aria-label={t.filter} className="flex gap-2">
+            {filters.map((f) => (
               <button
                 key={f.id}
                 type="button"
@@ -150,13 +129,12 @@ export default function Shop({
         </div>
       </Reveal>
 
-      <p className="sr-only" role="status">
-        Showing {items.length} products.
-      </p>
+      <p className="sr-only" role="status">{t.showing(items.length)}</p>
 
       <ul role="list" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {items.map((p) => {
-          const tint = TINTS[PRODUCTS.indexOf(p) % TINTS.length];
+          const tint = TINTS[products.indexOf(p) % TINTS.length];
+          const english = p.orderName ?? p.name;
           return (
             <li key={p.id}>
               <article className="card flex h-full flex-col overflow-hidden rounded-card">
@@ -172,6 +150,7 @@ export default function Shop({
                       src={p.image}
                       alt={p.name}
                       fill
+                      unoptimized
                       sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
                       className="object-cover"
                     />
@@ -180,36 +159,34 @@ export default function Shop({
                   )}
                 </div>
                 <div className="flex flex-1 flex-col gap-1 p-5">
-                  <h3 className="text-subtitle font-semibold tracking-tight">
-                    {p.name}
-                  </h3>
+                  <h3 className="text-subtitle font-semibold tracking-tight">{p.name}</h3>
                   <p className="text-body-lg text-muted">{p.tagline}</p>
-                  <p className="mt-2 text-body text-muted">
-                    {p.specs[1]?.label}: {p.specs[1]?.value}
-                  </p>
-                  <p className="mt-3 text-body-lg font-semibold">
-                    {p.price ?? "Request a quote"}
-                  </p>
+                  {p.specs[1] && (
+                    <p className="mt-2 text-body text-muted">
+                      {p.specs[1].label}: {p.specs[1].value}
+                    </p>
+                  )}
+                  <p className="mt-3 text-body-lg font-semibold">{p.price ?? t.quote}</p>
                   <div className="mt-auto flex flex-wrap gap-2 pt-5">
                     <button
                       type="button"
-                      onClick={() => selectInStudio(p.id)}
+                      onClick={() => selectInShowcase(p.id)}
                       className="btn btn-secondary !px-4"
                     >
-                      <Box size={18} aria-hidden />
-                      View gallery
+                      <Images size={18} aria-hidden />
+                      {t.view}
                     </button>
                     <a
-                      href={waLink(`Hi Arwas World, I would like to order ${p.name}.`)}
-                      data-source="shop"
-                      data-product={p.name}
+                      href={waLinkTo(whatsapp, `Hi Arwas World, I would like to order ${english}.`)}
                       target="_blank"
                       rel="noopener noreferrer"
+                      data-source="shop"
+                      data-product={english}
                       className="btn btn-subtle !px-3"
                     >
-                      Order
-                      <ArrowUpRight size={18} aria-hidden />
-                      <span className="sr-only"> {p.name} on WhatsApp (opens in a new tab)</span>
+                      {t.order}
+                      <ArrowUpRight size={18} aria-hidden className="rtl:-scale-x-100" />
+                      <span className="sr-only">{t.orderOn(p.name)}</span>
                     </a>
                   </div>
                 </div>

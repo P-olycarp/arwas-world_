@@ -25,6 +25,8 @@ export type Product = {
   /** Optional photo in /public/products, for example "/products/hoodie.jpg". */
   image?: string;
   media?: MediaItem[];
+  /** English name, used in WhatsApp order messages on the Arabic site. */
+  orderName?: string;
 };
 
 export const WHATSAPP_NUMBER = "254115003996";

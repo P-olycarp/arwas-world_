@@ -36,6 +36,7 @@ export async function saveSettings(formData: FormData): Promise<SettingsResult> 
   }
 
   revalidatePath("/");
+  revalidatePath("/ar");
   revalidatePath("/admin/settings");
   return { ok: true };
 }

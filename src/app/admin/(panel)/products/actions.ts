@@ -33,6 +33,10 @@ const schema = z.object({
   tagline: text(120).min(2, "Enter a tagline."),
   description: text(600).min(10, "Enter a description of at least 10 characters."),
   price: text(40),
+  nameAr: text(80),
+  taglineAr: text(120),
+  descriptionAr: text(600),
+  specsAr: text(400),
   sortOrder: z.coerce.number().int("Sort order must be a whole number.").min(0).max(9999),
 });
 
@@ -52,6 +56,10 @@ export async function saveProduct(id: string | null, formData: FormData): Promis
     tagline: get("tagline"),
     description: get("description"),
     price: get("price"),
+    nameAr: get("nameAr"),
+    taglineAr: get("taglineAr"),
+    descriptionAr: get("descriptionAr"),
+    specsAr: get("specsAr"),
     sortOrder: get("sortOrder"),
   });
   if (!parsed.success) {
@@ -101,6 +109,7 @@ export async function saveProduct(id: string | null, formData: FormData): Promis
   }
 
   revalidatePath("/");
+  revalidatePath("/ar");
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }
@@ -112,6 +121,7 @@ export async function deleteProduct(id: string): Promise<void> {
     await ProductModel.deleteOne({ _id: id });
   }
   revalidatePath("/");
+  revalidatePath("/ar");
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }
@@ -137,6 +147,7 @@ export async function seedProducts(): Promise<void> {
     );
   }
   revalidatePath("/");
+  revalidatePath("/ar");
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }

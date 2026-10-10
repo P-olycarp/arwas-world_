@@ -183,3 +183,39 @@ body {
 .kenburns {
   animation: kenburns 14s ease-out both;
 }
+
+/* Arabic (right-to-left) site */
+.rtl-site,
+.rtl-site h1,
+.rtl-site h2,
+.rtl-site h3,
+.rtl-site h4,
+.rtl-site nav a[href="#main"] {
+  font-family: var(--font-arabic), "Segoe UI", Tahoma, sans-serif;
+  text-transform: none;
+}
+.rtl-site,
+.rtl-site * {
+  letter-spacing: 0 !important;
+}
+.rtl-site h1 {
+  font-size: clamp(2.75rem, 9vw, 5.5rem);
+  line-height: 1.2;
+  font-weight: 800;
+}
+.rtl-site main h2 {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.25;
+}
+.rtl-site main h3 {
+  font-size: 1.5rem;
+  line-height: 1.35;
+}
+.rtl-site footer h2 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+.rtl-site nav a[href="#main"] {
+  font-size: 1.25rem;
+  line-height: 1.3;
+}

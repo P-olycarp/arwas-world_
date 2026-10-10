@@ -5,14 +5,19 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { waLinkTo, type Product } from "@/data/products";
+import { DICT, type Lang } from "@/lib/i18n";
 
 export default function Showcase({
   products,
   whatsapp,
+  lang,
 }: {
   products: Product[];
   whatsapp: string;
+  lang: Lang;
 }) {
+  const t = DICT[lang].showcase;
+  const rtl = lang === "ar";
   const [productId, setProductId] = useState(products[0]?.id ?? "");
   const [index, setIndex] = useState(0);
   const [reduced, setReduced] = useState(false);
@@ -41,7 +46,8 @@ export default function Showcase({
 
   const media = product.media ?? [];
   const n = media.length;
-  const item = n > 0 ? media[Math.min(index, n - 1)] : undefined;
+  const cur = Math.min(index, Math.max(n - 1, 0));
+  const item = n > 0 ? media[cur] : undefined;
   const go = (d: number) => setIndex((i) => (n === 0 ? 0 : (i + d + n) % n));
   const choose = (id: string) => {
     setProductId(id);
@@ -50,9 +56,9 @@ export default function Showcase({
 
   const onTabKey = (e: KeyboardEvent<HTMLDivElement>) => {
     const i = products.findIndex((p) => p.id === productId);
+    const step = e.key === "ArrowRight" ? (rtl ? -1 : 1) : e.key === "ArrowLeft" ? (rtl ? 1 : -1) : 0;
     let k = i;
-    if (e.key === "ArrowRight") k = (i + 1) % products.length;
-    else if (e.key === "ArrowLeft") k = (i - 1 + products.length) % products.length;
+    if (step !== 0) k = (i + step + products.length) % products.length;
     else if (e.key === "Home") k = 0;
     else if (e.key === "End") k = products.length - 1;
     else return;
@@ -64,10 +70,10 @@ export default function Showcase({
   const onViewerKey = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "ArrowLeft") {
       e.preventDefault();
-      go(-1);
+      go(rtl ? 1 : -1);
     } else if (e.key === "ArrowRight") {
       e.preventDefault();
-      go(1);
+      go(rtl ? -1 : 1);
     }
   };
 
@@ -78,17 +84,18 @@ export default function Showcase({
     else v.pause();
   };
 
+  const english = product.orderName ?? product.name;
   const orderLink = waLinkTo(
     whatsapp,
-    `Hi Arwas World, I would like to order: ${product.name}. I would like it customized.`,
+    `Hi Arwas World, I would like to order: ${english}. I would like it customized.`,
   );
 
   return (
-    <section id="studio" aria-label="Product showcase" className="px-3 sm:px-6">
+    <section id="studio" aria-label={t.label} className="px-3 sm:px-6">
       <div className="card mx-auto grid max-w-[1200px] overflow-hidden rounded-panel lg:grid-cols-[1.15fr_1fr]">
         <div
           role="tablist"
-          aria-label="Products"
+          aria-label={t.tabs}
           onKeyDown={onTabKey}
           className="col-span-full flex overflow-x-auto border-b border-line px-2 [scrollbar-width:none]"
         >
@@ -130,7 +137,7 @@ export default function Showcase({
               tabIndex={n > 1 ? 0 : -1}
               role="group"
               aria-roledescription="carousel"
-              aria-label={`${product.name} photos and videos. Use the left and right arrow keys to browse.`}
+              aria-label={t.carousel(product.name)}
               onKeyDown={onViewerKey}
               className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[4/3] lg:aspect-auto lg:h-[600px]"
             >
@@ -147,7 +154,7 @@ export default function Showcase({
                     {item.kind === "image" ? (
                       <Image
                         src={item.url}
-                        alt={`${product.name}, photo ${Math.min(index, n - 1) + 1} of ${n}`}
+                        alt={t.photoAlt(product.name, cur + 1, n)}
                         fill
                         unoptimized
                         sizes="(min-width:1024px) 55vw, 100vw"
@@ -162,7 +169,7 @@ export default function Showcase({
                         loop
                         playsInline
                         preload="metadata"
-                        aria-label={`${product.name}, video ${Math.min(index, n - 1) + 1} of ${n}`}
+                        aria-label={t.videoLabel(product.name, cur + 1, n)}
                         onPlay={() => setPlaying(true)}
                         onPause={() => setPlaying(false)}
                         className="h-full w-full object-cover"
@@ -176,7 +183,7 @@ export default function Showcase({
                     <p className="font-display text-[clamp(2.5rem,7vw,4.5rem)] uppercase leading-none text-white/90">
                       {product.name}
                     </p>
-                    <p className="mt-3 text-body-lg text-white/70">Photos and videos coming soon.</p>
+                    <p className="mt-3 text-body-lg text-white/70">{t.soon}</p>
                   </div>
                 </div>
               )}
@@ -191,31 +198,31 @@ export default function Showcase({
                   <button
                     type="button"
                     onClick={() => go(-1)}
-                    aria-label="Previous photo or video"
-                    className="btn absolute left-3 top-1/2 -translate-y-1/2 !rounded-full !bg-black/50 !px-0 text-white hover:!bg-black/70"
+                    aria-label={t.prev}
+                    className="btn absolute start-3 top-1/2 -translate-y-1/2 !rounded-full !bg-black/50 !px-0 text-white hover:!bg-black/70"
                   >
-                    <ChevronLeft size={22} aria-hidden />
+                    <ChevronLeft size={22} aria-hidden className="rtl:rotate-180" />
                   </button>
                   <button
                     type="button"
                     onClick={() => go(1)}
-                    aria-label="Next photo or video"
-                    className="btn absolute right-3 top-1/2 -translate-y-1/2 !rounded-full !bg-black/50 !px-0 text-white hover:!bg-black/70"
+                    aria-label={t.next}
+                    className="btn absolute end-3 top-1/2 -translate-y-1/2 !rounded-full !bg-black/50 !px-0 text-white hover:!bg-black/70"
                   >
-                    <ChevronRight size={22} aria-hidden />
+                    <ChevronRight size={22} aria-hidden className="rtl:rotate-180" />
                   </button>
                 </>
               )}
 
               <div className="absolute inset-x-0 bottom-3 flex items-center justify-between px-4">
-                <span className="rounded-full bg-black/50 px-3 py-1 text-caption font-semibold">
-                  {n > 0 ? `${Math.min(index, n - 1) + 1} / ${n}` : ""}
+                <span dir="ltr" className="rounded-full bg-black/50 px-3 py-1 text-caption font-semibold">
+                  {n > 0 ? `${cur + 1} / ${n}` : ""}
                 </span>
                 {item?.kind === "video" && (
                   <button
                     type="button"
                     onClick={toggleVideo}
-                    aria-label={playing ? "Pause video" : "Play video"}
+                    aria-label={playing ? t.pause : t.play}
                     className="btn !rounded-full !bg-black/50 !px-0 text-white hover:!bg-black/70"
                   >
                     {playing ? <Pause size={18} aria-hidden /> : <Play size={18} aria-hidden />}
@@ -231,10 +238,10 @@ export default function Showcase({
                     <button
                       type="button"
                       onClick={() => setIndex(i)}
-                      aria-label={`Show ${m.kind === "image" ? "photo" : "video"} ${i + 1} of ${n}`}
-                      aria-current={i === Math.min(index, n - 1)}
+                      aria-label={m.kind === "image" ? t.showPhoto(i + 1, n) : t.showVideo(i + 1, n)}
+                      aria-current={i === cur}
                       className={`relative block h-16 w-14 overflow-hidden rounded-card ring-2 transition ${
-                        i === Math.min(index, n - 1) ? "ring-white" : "opacity-70 ring-transparent hover:opacity-100"
+                        i === cur ? "ring-white" : "opacity-70 ring-transparent hover:opacity-100"
                       }`}
                     >
                       {m.kind === "image" ? (
@@ -271,11 +278,11 @@ export default function Showcase({
                   {product.specs.map((s) => (
                     <div key={s.label} className="flex justify-between gap-4 border-t border-line py-3 text-body-lg">
                       <dt className="text-muted">{s.label}</dt>
-                      <dd className="text-right font-medium">{s.value}</dd>
+                      <dd className="text-end font-medium">{s.value}</dd>
                     </div>
                   ))}
                 </dl>
-                <p className="text-subtitle font-semibold">{product.price ?? "Request a quote"}</p>
+                <p className="text-subtitle font-semibold">{product.price ?? t.quote}</p>
               </motion.div>
             </AnimatePresence>
 
@@ -285,16 +292,14 @@ export default function Showcase({
                 target="_blank"
                 rel="noopener noreferrer"
                 data-source="showcase"
-                data-product={product.name}
+                data-product={english}
                 className="btn btn-primary self-start"
               >
-                Order on WhatsApp
-                <ArrowUpRight size={18} aria-hidden />
-                <span className="sr-only"> (opens in a new tab)</span>
+                {t.order}
+                <ArrowUpRight size={18} aria-hidden className="rtl:-scale-x-100" />
+                <span className="sr-only">{DICT[lang].nav.newTab}</span>
               </a>
-              <p className="max-w-[30em] text-body text-muted">
-                Tell us your name, team or logo on WhatsApp and we will send a preview before we print.
-              </p>
+              <p className="max-w-[30em] text-body text-muted">{t.note}</p>
             </div>
           </div>
         </div>

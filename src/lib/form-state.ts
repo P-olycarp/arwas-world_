@@ -14,6 +14,10 @@ export type ProductFormValues = {
   sortOrder: number;
   published: boolean;
   specs: { label: string; value: string }[];
+  nameAr: string;
+  taglineAr: string;
+  descriptionAr: string;
+  specsAr: string;
   media: { kind: "image" | "video"; url: string }[];
 };
 
@@ -31,5 +35,9 @@ export const EMPTY_PRODUCT: ProductFormValues = {
   sortOrder: 0,
   published: true,
   specs: [],
+  nameAr: "",
+  taglineAr: "",
+  descriptionAr: "",
+  specsAr: "",
   media: [],
 };

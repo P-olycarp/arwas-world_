@@ -7,5 +7,8 @@ const base =
     : "http://localhost:3000");
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [{ url: base, changeFrequency: "weekly", priority: 1 }];
+  return [
+    { url: base, changeFrequency: "weekly", priority: 1 },
+    { url: `${base}/ar`, changeFrequency: "weekly", priority: 0.9 },
+  ];
 }

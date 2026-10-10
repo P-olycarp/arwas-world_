@@ -107,6 +107,30 @@ export default function ProductForm({ id, values }: { id: string | null; values:
         ))}
       </fieldset>
 
+      <fieldset className="grid gap-4 rounded-card border border-line p-4">
+        <legend className="px-2 text-body-lg font-semibold">Arabic version (for the Oman site)</legend>
+        <p className="text-body text-muted">
+          Optional. Write in Arabic. Anything left empty shows the English text on the Arabic site.
+        </p>
+        <div className="grid gap-1.5">
+          <label htmlFor="nameAr" className="text-body-lg font-semibold">Name in Arabic</label>
+          <input id="nameAr" name="nameAr" dir="rtl" lang="ar" defaultValue={values.nameAr} maxLength={80} className="field" />
+        </div>
+        <div className="grid gap-1.5">
+          <label htmlFor="taglineAr" className="text-body-lg font-semibold">Tagline in Arabic</label>
+          <input id="taglineAr" name="taglineAr" dir="rtl" lang="ar" defaultValue={values.taglineAr} maxLength={120} className="field" />
+        </div>
+        <div className="grid gap-1.5">
+          <label htmlFor="descriptionAr" className="text-body-lg font-semibold">Description in Arabic</label>
+          <textarea id="descriptionAr" name="descriptionAr" dir="rtl" lang="ar" defaultValue={values.descriptionAr} maxLength={600} rows={4} className="field !min-h-28 py-2" />
+        </div>
+        <div className="grid gap-1.5">
+          <label htmlFor="specsAr" className="text-body-lg font-semibold">Details in Arabic</label>
+          <textarea id="specsAr" name="specsAr" dir="rtl" lang="ar" defaultValue={values.specsAr} maxLength={400} rows={4} aria-describedby="specsAr-help" className="field !min-h-28 py-2" />
+          <p id="specsAr-help" className="text-body text-muted">One detail per line, written as label: value.</p>
+        </div>
+      </fieldset>
+
       <Field label="Price" name="price" defaultValue={values.price} maxLength={40} help='Shown as written, for example "From KES 2,500". Leave empty to show "Request a quote".' />
 
       <MediaField name="media" defaultValue={values.media} />
