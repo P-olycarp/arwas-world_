@@ -18,6 +18,7 @@ export type ProductFormValues = {
   taglineAr: string;
   descriptionAr: string;
   specsAr: string;
+  priceOmr: string;
   media: { kind: "image" | "video"; url: string }[];
 };
 
@@ -39,5 +40,6 @@ export const EMPTY_PRODUCT: ProductFormValues = {
   taglineAr: "",
   descriptionAr: "",
   specsAr: "",
+  priceOmr: "",
   media: [],
 };

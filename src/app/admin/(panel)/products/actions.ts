@@ -37,6 +37,7 @@ const schema = z.object({
   taglineAr: text(120),
   descriptionAr: text(600),
   specsAr: text(400),
+  priceOmr: text(40),
   sortOrder: z.coerce.number().int("Sort order must be a whole number.").min(0).max(9999),
 });
 
@@ -60,6 +61,7 @@ export async function saveProduct(id: string | null, formData: FormData): Promis
     taglineAr: get("taglineAr"),
     descriptionAr: get("descriptionAr"),
     specsAr: get("specsAr"),
+    priceOmr: get("priceOmr"),
     sortOrder: get("sortOrder"),
   });
   if (!parsed.success) {

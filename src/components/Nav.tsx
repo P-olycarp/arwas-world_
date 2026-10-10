@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { waLinkTo } from "@/data/products";
 import { DICT, type Lang } from "@/lib/i18n";
+import { rememberLang } from "@/lib/lang";
 
 export default function Nav({ whatsapp, lang }: { whatsapp: string; lang: Lang }) {
   const t = DICT[lang].nav;
@@ -52,6 +53,7 @@ export default function Nav({ whatsapp, lang }: { whatsapp: string; lang: Lang }
           <a
             href={t.switchHref}
             hrefLang={t.switchLang}
+            onClick={() => rememberLang(t.switchLang)}
             lang={t.switchLang}
             className="btn btn-subtle !px-3 !text-[0.9375rem] !font-medium"
           >

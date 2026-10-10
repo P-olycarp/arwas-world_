@@ -27,6 +27,7 @@ const productSchema = new Schema(
     taglineAr: { type: String, default: "", trim: true },
     descriptionAr: { type: String, default: "", trim: true },
     specsAr: { type: String, default: "" },
+    priceOmr: { type: String, default: "", trim: true },
     image: { type: String, default: "" },
     media: { type: [mediaSchema], default: [] },
     model: { type: String, default: "" },

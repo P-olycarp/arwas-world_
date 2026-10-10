@@ -4,12 +4,14 @@ import { WHATSAPP_NUMBER } from "@/data/products";
 
 export type SiteSettings = {
   whatsapp: string;
+  whatsappOman: string;
   heroIntro: string;
   footerBlurb: string;
 };
 
 export const DEFAULT_SETTINGS: SiteSettings = {
   whatsapp: WHATSAPP_NUMBER,
+  whatsappOman: "",
   heroIntro:
     "Hoodies, T-shirts, jerseys and polos, plus tumblers, bottles and mugs, made with your name, team or brand on them. We ship from Kenya and Oman to the world.",
   footerBlurb:
@@ -24,6 +26,7 @@ export async function getSettings(): Promise<SiteSettings> {
     if (!d) return DEFAULT_SETTINGS;
     return {
       whatsapp: d.whatsapp || DEFAULT_SETTINGS.whatsapp,
+      whatsappOman: d.whatsappOman || "",
       heroIntro: d.heroIntro || DEFAULT_SETTINGS.heroIntro,
       footerBlurb: d.footerBlurb || DEFAULT_SETTINGS.footerBlurb,
     };

@@ -4,6 +4,7 @@ const settingSchema = new Schema(
   {
     key: { type: String, required: true, unique: true },
     whatsapp: { type: String, default: "" },
+    whatsappOman: { type: String, default: "" },
     heroIntro: { type: String, default: "" },
     footerBlurb: { type: String, default: "" },
   },

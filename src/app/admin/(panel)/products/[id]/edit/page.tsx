@@ -30,6 +30,7 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
     taglineAr: doc.taglineAr ?? "",
     descriptionAr: doc.descriptionAr ?? "",
     specsAr: doc.specsAr ?? "",
+    priceOmr: doc.priceOmr ?? "",
     image: doc.image ?? "",
     media: (() => {
       const list = (doc.media ?? []).map((m) => ({

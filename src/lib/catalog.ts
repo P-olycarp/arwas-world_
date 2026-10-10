@@ -53,7 +53,7 @@ export async function getProducts(lang: Lang = "en"): Promise<Product[]> {
         tagline: ar ? d.taglineAr || starter?.tagline || d.tagline : d.tagline,
         description: ar ? d.descriptionAr || starter?.description || d.description : d.description,
         specs: ar ? (arSpecs.length ? arSpecs : starter ? starter.specs : enSpecs) : enSpecs,
-        price: d.price || undefined,
+        price: (lang === "ar" ? d.priceOmr || d.price : d.price) || undefined,
         image: cover,
         media,
         scale: 1,

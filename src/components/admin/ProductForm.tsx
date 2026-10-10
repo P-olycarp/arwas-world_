@@ -133,6 +133,8 @@ export default function ProductForm({ id, values }: { id: string | null; values:
 
       <Field label="Price" name="price" defaultValue={values.price} maxLength={40} help='Shown as written, for example "From KES 2,500". Leave empty to show "Request a quote".' />
 
+      <Field label="Price in OMR (Arabic site, Oman)" name="priceOmr" defaultValue={values.priceOmr} maxLength={40} help='Shown on the Arabic site, for example "From OMR 7". Leave empty to show the main price.' />
+
       <MediaField name="media" defaultValue={values.media} />
 
       <Field label="Sort order" name="sortOrder" type="number" step="1" defaultValue={values.sortOrder} help="Lower numbers come first." />

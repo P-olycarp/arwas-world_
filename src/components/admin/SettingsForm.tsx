@@ -30,48 +30,31 @@ export default function SettingsForm({ values }: { values: SiteSettings }) {
       )}
 
       <div className="grid gap-1.5">
-        <label htmlFor="whatsapp" className="text-body-lg font-semibold">WhatsApp number</label>
-        <input
-          id="whatsapp"
-          name="whatsapp"
-          defaultValue={values.whatsapp}
-          inputMode="numeric"
-          autoComplete="off"
-          required
-          aria-describedby="whatsapp-help"
-          className="field"
-        />
+        <label htmlFor="whatsapp" className="text-body-lg font-semibold">WhatsApp number (main site)</label>
+        <input id="whatsapp" name="whatsapp" defaultValue={values.whatsapp} inputMode="numeric" autoComplete="off" required aria-describedby="whatsapp-help" className="field" />
         <p id="whatsapp-help" className="text-body text-muted">
           Digits only, with the country code and no plus sign. Kenya example: 254712345678.
-          Every Order button on the site opens a chat with this number.
+          Every Order button on the English site opens a chat with this number.
         </p>
       </div>
 
       <div className="grid gap-1.5">
-        <label htmlFor="heroIntro" className="text-body-lg font-semibold">Hero intro text</label>
-        <textarea
-          id="heroIntro"
-          name="heroIntro"
-          defaultValue={values.heroIntro}
-          rows={4}
-          maxLength={300}
-          required
-          className="field !min-h-28 py-2"
-        />
+        <label htmlFor="whatsappOman" className="text-body-lg font-semibold">WhatsApp number (Oman, Arabic site)</label>
+        <input id="whatsappOman" name="whatsappOman" defaultValue={values.whatsappOman} inputMode="numeric" autoComplete="off" aria-describedby="whatsappOman-help" className="field" />
+        <p id="whatsappOman-help" className="text-body text-muted">
+          Optional. Oman example: 96891234567. Leave empty to use the main number on the Arabic site too.
+        </p>
+      </div>
+
+      <div className="grid gap-1.5">
+        <label htmlFor="heroIntro" className="text-body-lg font-semibold">Hero intro text (English site)</label>
+        <textarea id="heroIntro" name="heroIntro" defaultValue={values.heroIntro} rows={4} maxLength={300} required className="field !min-h-28 py-2" />
         <p className="text-body text-muted">The paragraph under the main headline. Up to 300 characters.</p>
       </div>
 
       <div className="grid gap-1.5">
-        <label htmlFor="footerBlurb" className="text-body-lg font-semibold">Footer text</label>
-        <textarea
-          id="footerBlurb"
-          name="footerBlurb"
-          defaultValue={values.footerBlurb}
-          rows={3}
-          maxLength={200}
-          required
-          className="field !min-h-24 py-2"
-        />
+        <label htmlFor="footerBlurb" className="text-body-lg font-semibold">Footer text (English site)</label>
+        <textarea id="footerBlurb" name="footerBlurb" defaultValue={values.footerBlurb} rows={3} maxLength={200} required className="field !min-h-24 py-2" />
         <p className="text-body text-muted">A short description of the business. Up to 200 characters.</p>
       </div>
 
