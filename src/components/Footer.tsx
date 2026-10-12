@@ -54,7 +54,7 @@ export default function Footer({
         </div>
       </div>
       <div className="border-t border-line">
-        <p className="mx-auto max-w-[1200px] px-4 pb-24 pt-4 text-caption text-muted sm:px-6 md:pb-4">
+        <p className="mx-auto max-w-[1200px] px-4 pb-24 pt-4 text-caption text-muted sm:px-6">
           {t.rights(new Date().getFullYear())}
         </p>
       </div>

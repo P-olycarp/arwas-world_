@@ -276,7 +276,7 @@ export default function Showcase({
             )}
           </div>
 
-          <div className="flex flex-col justify-center gap-6 bg-surface p-6 sm:p-10 lg:p-12">
+          <div className="flex flex-col justify-center gap-6 break-words bg-surface p-6 text-start sm:p-10 lg:p-12">
             <AnimatePresence mode="wait">
               <motion.div
                 key={product.id}
@@ -291,9 +291,9 @@ export default function Showcase({
                 <p className="max-w-[34em] text-body-lg text-muted">{product.description}</p>
                 <dl>
                   {product.specs.map((s) => (
-                    <div key={s.label} className="flex justify-between gap-4 border-t border-line py-3 text-body-lg">
+                    <div key={s.label} className="flex flex-col gap-0.5 border-t border-line py-3 text-body-lg sm:flex-row sm:justify-between sm:gap-4">
                       <dt className="text-muted">{s.label}</dt>
-                      <dd className="text-end font-medium">{s.value}</dd>
+                      <dd className="font-medium sm:text-end">{s.value}</dd>
                     </div>
                   ))}
                 </dl>
@@ -308,7 +308,7 @@ export default function Showcase({
                 rel="noopener noreferrer"
                 data-source="showcase"
                 data-product={english}
-                className="btn btn-primary self-start"
+                className="btn btn-primary w-full sm:w-auto sm:self-start"
               >
                 {t.order}
                 <ArrowUpRight size={18} aria-hidden className="rtl:-scale-x-100" />
