@@ -29,11 +29,23 @@ export default function Nav({ whatsapp, lang }: { whatsapp: string; lang: Lang }
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  const switchLink = (extra: string) => (
+    <a
+      href={t.switchHref}
+      hrefLang={t.switchLang}
+      lang={t.switchLang}
+      onClick={() => rememberLang(t.switchLang)}
+      className={extra}
+    >
+      {t.switchLabel}
+    </a>
+  );
+
   return (
     <header className="material-acrylic sticky top-0 z-50 border-b border-line">
       <nav
         aria-label={t.primary}
-        className="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-4 sm:px-6"
+        className="mx-auto flex h-14 max-w-[1200px] items-center justify-between gap-2 px-4 sm:px-6"
       >
         <a href="#main" className="inline-flex min-h-11 items-center text-body-lg font-semibold">
           {t.brand}
@@ -50,15 +62,7 @@ export default function Nav({ whatsapp, lang }: { whatsapp: string; lang: Lang }
         </ul>
 
         <div className="flex items-center gap-1">
-          <a
-            href={t.switchHref}
-            hrefLang={t.switchLang}
-            onClick={() => rememberLang(t.switchLang)}
-            lang={t.switchLang}
-            className="btn btn-subtle !px-3 !text-[0.9375rem] !font-medium"
-          >
-            {t.switchLabel}
-          </a>
+          {switchLink("btn btn-subtle hidden !px-3 !text-[0.9375rem] !font-medium sm:inline-flex")}
           <a
             href={waLinkTo(whatsapp, "Hi Arwas World, I would like to place a custom order.")}
             target="_blank"
@@ -90,12 +94,15 @@ export default function Nav({ whatsapp, lang }: { whatsapp: string; lang: Lang }
                 <a
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="flex min-h-11 items-center rounded-control px-3 text-body-lg font-medium hover:bg-panel"
+                  className="flex min-h-12 items-center rounded-control px-3 text-body-lg font-medium hover:bg-panel"
                 >
                   {l.label}
                 </a>
               </li>
             ))}
+            <li className="border-t border-line sm:hidden">
+              {switchLink("flex min-h-12 items-center rounded-control px-3 text-body-lg font-medium hover:bg-panel")}
+            </li>
           </ul>
         </div>
       )}

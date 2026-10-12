@@ -6,7 +6,7 @@ import { EnquiryModel } from "@/models/Enquiry";
 const clean = (max: number) => z.string().trim().max(max).default("");
 
 const schema = z.object({
-  source: z.enum(["studio", "shop", "general"]).default("general"),
+  source: z.enum(["studio", "shop", "showcase", "floating", "general"]).default("general"),
   product: clean(80),
   colour: clean(40),
   printText: clean(40),

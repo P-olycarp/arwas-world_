@@ -8,6 +8,8 @@ export const dynamic = "force-dynamic";
 
 const SOURCE_LABEL: Record<string, string> = {
   studio: "3D studio",
+  showcase: "Showcase",
+  floating: "Floating button",
   shop: "Shop",
   general: "General button",
 };

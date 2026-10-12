@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type TouchEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { waLinkTo, type Product } from "@/data/products";
@@ -23,6 +23,7 @@ export default function Showcase({
   const [reduced, setReduced] = useState(false);
   const [playing, setPlaying] = useState(false);
   const video = useRef<HTMLVideoElement>(null);
+  const touchX = useRef<number | null>(null);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   useEffect(() => {
@@ -75,6 +76,18 @@ export default function Showcase({
       e.preventDefault();
       go(rtl ? -1 : 1);
     }
+  };
+
+  const onTouchStart = (e: TouchEvent<HTMLDivElement>) => {
+    touchX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
+    const start = touchX.current;
+    touchX.current = null;
+    if (start === null) return;
+    const dx = e.changedTouches[0].clientX - start;
+    if (Math.abs(dx) < 40) return;
+    go((dx < 0 ? 1 : -1) * (rtl ? -1 : 1));
   };
 
   const toggleVideo = () => {
@@ -139,7 +152,9 @@ export default function Showcase({
               aria-roledescription="carousel"
               aria-label={t.carousel(product.name)}
               onKeyDown={onViewerKey}
-              className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[4/3] lg:aspect-auto lg:h-[600px]"
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+              className="relative aspect-[4/5] w-full touch-pan-y overflow-hidden sm:aspect-[4/3] lg:aspect-auto lg:h-[600px]"
             >
               {item ? (
                 <AnimatePresence initial={false}>

@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import MotionProvider from "@/components/MotionProvider";
 import EnquiryTracker from "@/components/EnquiryTracker";
 import LanguageBanner from "@/components/LanguageBanner";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import { getProducts } from "@/lib/catalog";
 import { getSettings } from "@/lib/settings";
 import { DICT, type Lang } from "@/lib/i18n";
@@ -38,6 +39,7 @@ export default async function HomePage({ lang }: { lang: Lang }) {
         <Cta whatsapp={whatsapp} lang={lang} />
       </main>
       <Footer whatsapp={whatsapp} blurb={blurb} lang={lang} />
+      <FloatingWhatsApp whatsapp={whatsapp} lang={lang} />
     </MotionProvider>
   );
 }

@@ -21,7 +21,7 @@ export default function Hero({ intro, lang }: { intro: string; lang: Lang }) {
         <p className="mx-auto mb-8 mt-6 max-w-[36em] text-subtitle text-muted">{intro}</p>
       </Reveal>
       <Reveal delay={0.22}>
-        <div className="flex flex-wrap items-center justify-center gap-3">
+        <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
           <a href="#studio" className="btn btn-primary">{t.primary}</a>
           <a href="#custom" className="btn btn-secondary">{t.secondary}</a>
         </div>

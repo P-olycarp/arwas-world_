@@ -12,7 +12,7 @@ const STYLE = [
 export default function Markets({ lang }: { lang: Lang }) {
   const t = DICT[lang].markets;
   return (
-    <section id="markets" aria-labelledby="markets-title" className="mx-auto max-w-[1000px] px-4 pt-24 sm:px-6 sm:pt-32">
+    <section id="markets" aria-labelledby="markets-title" className="mx-auto max-w-[1000px] px-4 pt-16 sm:px-6 sm:pt-32">
       <SectionHeading id="markets-title" eyebrow={t.eyebrow} title={t.title} />
       <ul role="list" className="grid gap-4 md:grid-cols-3">
         {t.items.map((m, i) => {

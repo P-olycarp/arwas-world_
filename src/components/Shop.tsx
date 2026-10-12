@@ -104,7 +104,7 @@ export default function Shop({
     <section
       id="shop"
       aria-labelledby="shop-title"
-      className="mx-auto max-w-[1200px] px-4 pt-24 sm:px-6 sm:pt-32"
+      className="mx-auto max-w-[1200px] px-4 pt-16 sm:px-6 sm:pt-32"
     >
       <Reveal>
         <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
