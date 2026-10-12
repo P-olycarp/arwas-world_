@@ -105,12 +105,12 @@ export default function Showcase({
 
   return (
     <section id="studio" aria-label={t.label} className="px-3 sm:px-6">
-      <div className="card mx-auto grid max-w-[1200px] overflow-hidden rounded-panel lg:grid-cols-[1.15fr_1fr]">
+      <div className="card mx-auto grid max-w-[1200px] grid-cols-[minmax(0,1fr)] overflow-hidden rounded-panel lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <div
           role="tablist"
           aria-label={t.tabs}
           onKeyDown={onTabKey}
-          className="col-span-full flex overflow-x-auto border-b border-line px-2 [scrollbar-width:none]"
+          className="col-span-full flex min-w-0 overflow-x-auto border-b border-line px-2 [scrollbar-width:none]"
         >
           {products.map((p) => {
             const active = p.id === productId;
@@ -145,7 +145,7 @@ export default function Showcase({
         </div>
 
         <div id="showcase-panel" role="tabpanel" aria-labelledby={`tab-${product.id}`} className="contents">
-          <div className="bg-[#0b0b0c] text-white">
+          <div className="min-w-0 bg-[#0b0b0c] text-white">
             <div
               tabIndex={n > 1 ? 0 : -1}
               role="group"
@@ -276,7 +276,7 @@ export default function Showcase({
             )}
           </div>
 
-          <div className="flex flex-col justify-center gap-6 break-words bg-surface p-6 text-start sm:p-10 lg:p-12">
+          <div className="min-w-0 flex flex-col justify-center gap-6 break-words bg-surface p-6 text-start sm:p-10 lg:p-12">
             <AnimatePresence mode="wait">
               <motion.div
                 key={product.id}
