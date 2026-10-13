@@ -239,3 +239,8 @@ body {
     min-height: 48px;
   }
 }
+
+/* Keep the page still behind an open basket or search dialog */
+body:has(dialog[open]) {
+  overflow: hidden;
+}

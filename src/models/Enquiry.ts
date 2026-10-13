@@ -1,6 +1,6 @@
 import mongoose, { Schema, type InferSchemaType, type Model } from "mongoose";
 
-export const ENQUIRY_SOURCES = ["studio", "shop", "showcase", "floating", "general"] as const;
+export const ENQUIRY_SOURCES = ["studio", "shop", "showcase", "floating", "basket", "general"] as const;
 export const ENQUIRY_STATUSES = ["new", "contacted", "won", "lost"] as const;
 
 const enquirySchema = new Schema({
@@ -8,6 +8,7 @@ const enquirySchema = new Schema({
   product: { type: String, default: "", trim: true },
   colour: { type: String, default: "", trim: true },
   printText: { type: String, default: "", trim: true },
+  details: { type: String, default: "" },
   status: { type: String, enum: ENQUIRY_STATUSES, default: "new" },
   createdAt: { type: Date, default: Date.now, index: true },
 });

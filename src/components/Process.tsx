@@ -7,7 +7,7 @@ const COLORS = ["var(--kenya)", "var(--gold)", "var(--oman)"];
 export default function Process({ lang }: { lang: Lang }) {
   const t = DICT[lang].process;
   return (
-    <section aria-labelledby="process-title" className="mx-auto max-w-[1000px] px-4 pt-16 sm:px-6 sm:pt-32">
+    <section id="how" aria-labelledby="process-title" className="mx-auto max-w-[1000px] px-4 pt-16 sm:px-6 sm:pt-32">
       <SectionHeading id="process-title" eyebrow={t.eyebrow} title={t.title} />
       <ol role="list" className="grid gap-4 md:grid-cols-3">
         {t.steps.map((s, i) => (

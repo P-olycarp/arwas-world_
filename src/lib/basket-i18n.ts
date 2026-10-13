@@ -1,0 +1,118 @@
+import type { Lang } from "@/lib/i18n";
+
+export const APPAREL_KINDS: string[] = ["hoodie", "tee", "polo", "jersey"];
+export const DEFAULT_SIZES = ["S", "M", "L", "XL", "XXL"];
+
+const en = {
+  basket: {
+    open: (n: number) => (n === 0 ? "Open basket, empty" : `Open basket, ${n} ${n === 1 ? "piece" : "pieces"}`),
+    title: "Basket",
+    close: "Close basket",
+    empty: "Your basket is empty.",
+    emptyHint: "Browse the showcase and add products. You can order several at once.",
+    sizeWord: "Size",
+    less: (name: string) => `Decrease quantity of ${name}`,
+    more: (name: string) => `Increase quantity of ${name}`,
+    remove: (name: string) => `Remove ${name}`,
+    notes: "Delivery location or notes",
+    notesHelp: "Optional. For example your town or country.",
+    whatsapp: "Send order on WhatsApp",
+    mpesa: "Pay with M-Pesa",
+    soon: "Coming soon",
+    mpesaNote:
+      "M-Pesa checkout is coming soon. For now, send your order on WhatsApp and we will confirm the price and payment with you.",
+    priceNote: "Prices and delivery are confirmed with you on WhatsApp.",
+    clear: "Clear basket",
+    pieces: (n: number) => `${n} ${n === 1 ? "piece" : "pieces"}`,
+  },
+  options: {
+    add: "Add to basket",
+    choose: "Choose options",
+    added: (n: number) => `Added. Your basket has ${n} ${n === 1 ? "piece" : "pieces"}.`,
+    view: "View basket",
+    full: "Your basket is full (20 items). Send the order or remove an item first.",
+    size: "Size",
+    colour: "Colour",
+    sizeError: "Select a size first.",
+    colourError: "Select a colour first.",
+    note: "Name, team or logo text, or a special request (optional)",
+    noteHelp: "Up to 80 characters. If you have a logo, send it to us on WhatsApp after you order.",
+    qty: "Quantity",
+    less: "Decrease quantity",
+    more: "Increase quantity",
+    help: "M-Pesa checkout is coming soon. For now we confirm your order and payment with you on WhatsApp.",
+  },
+  search: {
+    open: "Search",
+    title: "Search",
+    placeholder: "Search products and information",
+    close: "Close search",
+    hint: "Try hoodie, mug, shipping or Oman.",
+    none: (q: string) => `No results for "${q}".`,
+    products: "Products",
+    pages: "Pages and information",
+    apparel: "Apparel",
+    drinkware: "Drinkware",
+    results: (n: number) => `${n} ${n === 1 ? "result" : "results"}.`,
+    suggestions: ["Hoodies", "T-shirts", "Mugs", "Shipping to Oman"],
+  },
+};
+
+export type BDict = typeof en;
+
+const ar: BDict = {
+  basket: {
+    open: (n: number) => (n === 0 ? "فتح السلة، فارغة" : `فتح السلة، ${n} قطعة`),
+    title: "السلة",
+    close: "إغلاق السلة",
+    empty: "سلتك فارغة.",
+    emptyHint: "تصفّح المعرض وأضف المنتجات. يمكنك طلب عدة منتجات معاً.",
+    sizeWord: "المقاس",
+    less: (name: string) => `تقليل كمية ${name}`,
+    more: (name: string) => `زيادة كمية ${name}`,
+    remove: (name: string) => `إزالة ${name}`,
+    notes: "موقع التوصيل أو ملاحظات",
+    notesHelp: "اختياري. مثلاً مدينتك أو بلدك.",
+    whatsapp: "أرسل الطلب عبر واتساب",
+    mpesa: "الدفع عبر إم-بيسا",
+    soon: "قريباً",
+    mpesaNote:
+      "الدفع عبر إم-بيسا سيتوفر قريباً. حالياً أرسل طلبك عبر واتساب وسنؤكد معك السعر وطريقة الدفع.",
+    priceNote: "الأسعار والتوصيل تُؤكَّد معك عبر واتساب.",
+    clear: "تفريغ السلة",
+    pieces: (n: number) => `${n} قطعة`,
+  },
+  options: {
+    add: "أضف إلى السلة",
+    choose: "اختر الخيارات",
+    added: (n: number) => `تمت الإضافة. سلتك الآن تحتوي ${n} قطعة.`,
+    view: "عرض السلة",
+    full: "السلة ممتلئة (20 صنفاً). أرسل الطلب أو أزل صنفاً أولاً.",
+    size: "المقاس",
+    colour: "اللون",
+    sizeError: "اختر المقاس أولاً.",
+    colourError: "اختر اللون أولاً.",
+    note: "اسم أو فريق أو نص الشعار، أو طلب خاص (اختياري)",
+    noteHelp: "حتى 80 حرفاً. إذا كان لديك شعار، أرسله لنا عبر واتساب بعد الطلب.",
+    qty: "الكمية",
+    less: "تقليل الكمية",
+    more: "زيادة الكمية",
+    help: "الدفع عبر إم-بيسا قريباً. حالياً نؤكد معك الطلب والدفع عبر واتساب.",
+  },
+  search: {
+    open: "بحث",
+    title: "بحث",
+    placeholder: "ابحث في المنتجات والمعلومات",
+    close: "إغلاق البحث",
+    hint: "جرّب: هودي، كوب، شحن، عُمان.",
+    none: (q: string) => `لا نتائج لـ "${q}".`,
+    products: "المنتجات",
+    pages: "الصفحات والمعلومات",
+    apparel: "الملابس",
+    drinkware: "أدوات الشرب",
+    results: (n: number) => `${n} نتيجة.`,
+    suggestions: ["هوديات", "تيشيرتات", "أكواب", "الشحن إلى عُمان"],
+  },
+};
+
+export const BDICT: Record<Lang, BDict> = { en, ar };

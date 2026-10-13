@@ -107,6 +107,10 @@ export default function ProductForm({ id, values }: { id: string | null; values:
         ))}
       </fieldset>
 
+      <Field label="Sizes offered" name="sizes" defaultValue={values.sizes} maxLength={100} help='Comma separated, for example "S, M, L, XL". Leave empty to offer S to XXL for clothing and no sizes for drinkware.' />
+
+      <Field label="Colours offered" name="colours" defaultValue={values.colours} maxLength={150} help='Comma separated, for example "Black, White, Navy". Leave empty if the product comes in one design only.' />
+
       <fieldset className="grid gap-4 rounded-card border border-line p-4">
         <legend className="px-2 text-body-lg font-semibold">Arabic version (for the Oman site)</legend>
         <p className="text-body text-muted">

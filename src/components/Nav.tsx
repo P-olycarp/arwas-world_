@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Menu, X } from "lucide-react";
-import { waLinkTo } from "@/data/products";
+import { Menu, Search, ShoppingBag, X } from "lucide-react";
+import { BDICT } from "@/lib/basket-i18n";
 import { DICT, type Lang } from "@/lib/i18n";
 import { rememberLang } from "@/lib/lang";
+import { useBasket } from "./BasketProvider";
 
-export default function Nav({ whatsapp, lang }: { whatsapp: string; lang: Lang }) {
+export default function Nav({ lang }: { lang: Lang }) {
   const t = DICT[lang].nav;
+  const b = BDICT[lang].basket;
+  const s = BDICT[lang].search;
+  const { count, openBasket } = useBasket();
   const links = [
     { href: "#studio", label: t.showcase },
     { href: "#shop", label: t.shop },
@@ -62,16 +66,32 @@ export default function Nav({ whatsapp, lang }: { whatsapp: string; lang: Lang }
         </ul>
 
         <div className="flex items-center gap-1">
-          {switchLink("btn btn-subtle hidden !px-3 !text-[0.9375rem] !font-medium sm:inline-flex")}
-          <a
-            href={waLinkTo(whatsapp, "Hi Arwas World, I would like to place a custom order.")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary !px-4"
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent("arwas:open-search"))}
+            aria-label={s.open}
+            className="btn btn-subtle !px-0"
           >
-            {t.order}
-            <span className="sr-only">{t.newTab}</span>
-          </a>
+            <Search size={22} aria-hidden />
+          </button>
+          {switchLink("btn btn-subtle hidden !px-3 !text-[0.9375rem] !font-medium sm:inline-flex")}
+          <button
+            type="button"
+            onClick={openBasket}
+            aria-label={b.open(count)}
+            className="btn btn-primary relative !px-0 sm:!px-4"
+          >
+            <ShoppingBag size={20} aria-hidden />
+            <span className="hidden sm:inline">{b.title}</span>
+            {count > 0 && (
+              <span
+                aria-hidden
+                className="absolute -end-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-brand px-1 text-caption font-bold text-white"
+              >
+                {count}
+              </span>
+            )}
+          </button>
           <button
             ref={menuButton}
             type="button"

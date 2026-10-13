@@ -28,6 +28,8 @@ const productSchema = new Schema(
     descriptionAr: { type: String, default: "", trim: true },
     specsAr: { type: String, default: "" },
     priceOmr: { type: String, default: "", trim: true },
+    sizes: { type: String, default: "", trim: true },
+    colours: { type: String, default: "", trim: true },
     image: { type: String, default: "" },
     media: { type: [mediaSchema], default: [] },
     model: { type: String, default: "" },

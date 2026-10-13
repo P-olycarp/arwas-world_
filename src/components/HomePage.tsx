@@ -11,6 +11,9 @@ import MotionProvider from "@/components/MotionProvider";
 import EnquiryTracker from "@/components/EnquiryTracker";
 import LanguageBanner from "@/components/LanguageBanner";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import BasketProvider from "@/components/BasketProvider";
+import BasketDrawer from "@/components/BasketDrawer";
+import SearchDialog from "@/components/SearchDialog";
 import { getProducts } from "@/lib/catalog";
 import { getSettings } from "@/lib/settings";
 import { DICT, type Lang } from "@/lib/i18n";
@@ -23,23 +26,27 @@ export default async function HomePage({ lang }: { lang: Lang }) {
   const whatsapp = lang === "ar" ? settings.whatsappOman || settings.whatsapp : settings.whatsapp;
   return (
     <MotionProvider>
-      <a href="#main" className="skip-link">
-        {t.skip}
-      </a>
-      <EnquiryTracker />
-      {lang === "en" && <LanguageBanner />}
-      <Nav whatsapp={whatsapp} lang={lang} />
-      <main id="main" tabIndex={-1} className="outline-none">
-        <Hero intro={intro} lang={lang} />
-        <Showcase products={products} whatsapp={whatsapp} lang={lang} />
-        <Shop products={products} whatsapp={whatsapp} lang={lang} />
-        <Craft lang={lang} />
-        <Process lang={lang} />
-        <Markets lang={lang} />
-        <Cta whatsapp={whatsapp} lang={lang} />
-      </main>
-      <Footer whatsapp={whatsapp} blurb={blurb} lang={lang} />
-      <FloatingWhatsApp whatsapp={whatsapp} lang={lang} />
+      <BasketProvider>
+        <a href="#main" className="skip-link">
+          {t.skip}
+        </a>
+        <EnquiryTracker />
+        {lang === "en" && <LanguageBanner />}
+        <Nav lang={lang} />
+        <main id="main" tabIndex={-1} className="outline-none">
+          <Hero intro={intro} lang={lang} />
+          <Showcase products={products} whatsapp={whatsapp} lang={lang} />
+          <Shop products={products} whatsapp={whatsapp} lang={lang} />
+          <Craft lang={lang} />
+          <Process lang={lang} />
+          <Markets lang={lang} />
+          <Cta whatsapp={whatsapp} lang={lang} />
+        </main>
+        <Footer whatsapp={whatsapp} blurb={blurb} lang={lang} />
+        <FloatingWhatsApp whatsapp={whatsapp} lang={lang} />
+        <BasketDrawer whatsapp={whatsapp} lang={lang} />
+        <SearchDialog products={products} whatsapp={whatsapp} lang={lang} />
+      </BasketProvider>
     </MotionProvider>
   );
 }

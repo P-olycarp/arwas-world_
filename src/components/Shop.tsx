@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { ArrowUpRight, Images } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { waLinkTo, type Product } from "@/data/products";
 import { DICT, type Lang } from "@/lib/i18n";
+import { BDICT } from "@/lib/basket-i18n";
 import { Reveal } from "./Reveal";
 
 type Filter = "all" | "apparel" | "drinkware";
@@ -168,26 +169,12 @@ export default function Shop({
                   )}
                   <p className="mt-3 text-body-lg font-semibold">{p.price ?? t.quote}</p>
                   <div className="mt-auto flex flex-wrap gap-2 pt-5">
-                    <button
-                      type="button"
-                      onClick={() => selectInShowcase(p.id)}
-                      className="btn btn-secondary !px-4"
-                    >
-                      <Images size={18} aria-hidden />
-                      {t.view}
+                    
+                    <button type="button" onClick={() => selectInShowcase(p.id)} className="btn btn-primary !px-4">
+                      <ShoppingBag size={18} aria-hidden />
+                      {BDICT[lang].options.choose}
+                      <span className="sr-only"> {p.name}</span>
                     </button>
-                    <a
-                      href={waLinkTo(whatsapp, `Hi Arwas World, I would like to order ${english}.`)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-source="shop"
-                      data-product={english}
-                      className="btn btn-subtle !px-3"
-                    >
-                      {t.order}
-                      <ArrowUpRight size={18} aria-hidden className="rtl:-scale-x-100" />
-                      <span className="sr-only">{t.orderOn(p.name)}</span>
-                    </a>
                   </div>
                 </div>
               </article>

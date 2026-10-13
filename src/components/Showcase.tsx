@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { waLinkTo, type Product } from "@/data/products";
 import { DICT, type Lang } from "@/lib/i18n";
+import ProductOptions from "./ProductOptions";
 
 export default function Showcase({
   products,
@@ -301,21 +302,7 @@ export default function Showcase({
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex flex-col gap-3">
-              <a
-                href={orderLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-source="showcase"
-                data-product={english}
-                className="btn btn-primary w-full sm:w-auto sm:self-start"
-              >
-                {t.order}
-                <ArrowUpRight size={18} aria-hidden className="rtl:-scale-x-100" />
-                <span className="sr-only">{DICT[lang].nav.newTab}</span>
-              </a>
-              <p className="max-w-[30em] text-body text-muted">{t.note}</p>
-            </div>
+            <ProductOptions key={product.id} product={product} lang={lang} />
           </div>
         </div>
       </div>

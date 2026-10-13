@@ -14,6 +14,7 @@ export default function EnquiryTracker() {
         product: a.dataset.product ?? "",
         colour: a.dataset.colour ?? "",
         printText: a.dataset.print ?? "",
+        details: a.dataset.details ?? "",
       };
       try {
         fetch("/api/enquiries", {

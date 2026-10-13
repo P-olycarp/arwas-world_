@@ -6,10 +6,11 @@ import { EnquiryModel } from "@/models/Enquiry";
 const clean = (max: number) => z.string().trim().max(max).default("");
 
 const schema = z.object({
-  source: z.enum(["studio", "shop", "showcase", "floating", "general"]).default("general"),
+  source: z.enum(["studio", "shop", "showcase", "floating", "basket", "general"]).default("general"),
   product: clean(80),
   colour: clean(40),
   printText: clean(40),
+  details: z.string().default("").transform((s) => s.trim().slice(0, 1500)),
 });
 
 // Best-effort limit per server instance: 20 clicks per minute per visitor.

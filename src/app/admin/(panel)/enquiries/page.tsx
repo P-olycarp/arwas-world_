@@ -10,6 +10,7 @@ const SOURCE_LABEL: Record<string, string> = {
   studio: "3D studio",
   showcase: "Showcase",
   floating: "Floating button",
+  basket: "Basket",
   shop: "Shop",
   general: "General button",
 };
@@ -79,6 +80,7 @@ export default async function EnquiriesPage() {
                 <th scope="col" className="p-4 font-semibold">Product</th>
                 <th scope="col" className="p-4 font-semibold">Colour</th>
                 <th scope="col" className="p-4 font-semibold">Print text</th>
+                <th scope="col" className="p-4 font-semibold">Order details</th>
                 <th scope="col" className="p-4 font-semibold">From</th>
                 <th scope="col" className="p-4 font-semibold">Status</th>
               </tr>
@@ -98,6 +100,7 @@ export default async function EnquiriesPage() {
                     <td className="p-4">{e.product || "General"}</td>
                     <td className="p-4">{e.colour || "-"}</td>
                     <td className="p-4">{e.printText || "-"}</td>
+                    <td className="max-w-[340px] p-4 text-body"><span className="whitespace-pre-wrap break-words">{e.details || "-"}</span></td>
                     <td className="p-4">{SOURCE_LABEL[e.source] ?? e.source}</td>
                     <td className="p-4">
                       <form action={setEnquiryStatus.bind(null, id)} className="flex items-center gap-2">

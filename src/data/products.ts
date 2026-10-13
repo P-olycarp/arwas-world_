@@ -27,6 +27,8 @@ export type Product = {
   media?: MediaItem[];
   /** English name, used in WhatsApp order messages on the Arabic site. */
   orderName?: string;
+  sizes?: string[];
+  colours?: string[];
 };
 
 export const WHATSAPP_NUMBER = "254115003996";
