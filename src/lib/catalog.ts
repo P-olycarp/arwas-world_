@@ -49,6 +49,7 @@ export async function getProducts(lang: Lang = "en"): Promise<Product[]> {
         id: d.slug,
         kind: d.kind as Product["kind"],
         orderName: d.name,
+        inReel: d.inReel ?? true,
         sizes: (d.sizes ?? "").split(",").map((s) => s.trim()).filter(Boolean),
         colours: (d.colours ?? "").split(",").map((s) => s.trim()).filter(Boolean),
         name: ar ? d.nameAr || starter?.name || d.name : d.name,

@@ -29,6 +29,7 @@ const productSchema = new Schema(
     specsAr: { type: String, default: "" },
     priceOmr: { type: String, default: "", trim: true },
     sizes: { type: String, default: "", trim: true },
+    inReel: { type: Boolean, default: true },
     colours: { type: String, default: "", trim: true },
     image: { type: String, default: "" },
     media: { type: [mediaSchema], default: [] },

@@ -268,3 +268,18 @@ canvas {
     font-size: 1.25rem;
   }
 }
+
+/* Orange accent for headings on dark video */
+.text-gradient-light {
+  background: linear-gradient(100deg, #ffb066, #ff6a2b 60%, #ff4d1a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@media (forced-colors: active) {
+  .text-gradient-light {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: currentColor;
+  }
+}

@@ -28,6 +28,7 @@ export type Product = {
   /** English name, used in WhatsApp order messages on the Arabic site. */
   orderName?: string;
   sizes?: string[];
+  inReel?: boolean;
   colours?: string[];
 };
 

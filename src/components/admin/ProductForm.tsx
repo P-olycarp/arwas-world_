@@ -144,6 +144,11 @@ export default function ProductForm({ id, values }: { id: string | null; values:
       <Field label="Sort order" name="sortOrder" type="number" step="1" defaultValue={values.sortOrder} help="Lower numbers come first." />
 
       <label className="flex min-h-11 items-center gap-3 text-body-lg">
+        <input type="checkbox" name="inReel" defaultChecked={values.inReel} className="h-5 w-5" />
+        Show this product's videos in the home page reel
+      </label>
+
+      <label className="flex min-h-11 items-center gap-3 text-body-lg">
         <input type="checkbox" name="published" defaultChecked={values.published} className="h-5 w-5" />
         Show this product on the website
       </label>

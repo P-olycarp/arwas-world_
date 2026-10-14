@@ -20,6 +20,7 @@ export type ProductFormValues = {
   specsAr: string;
   priceOmr: string;
   sizes: string;
+  inReel: boolean;
   colours: string;
   media: { kind: "image" | "video"; url: string }[];
 };
@@ -44,6 +45,7 @@ export const EMPTY_PRODUCT: ProductFormValues = {
   specsAr: "",
   priceOmr: "",
   sizes: "",
+  inReel: true,
   colours: "",
   media: [],
 };

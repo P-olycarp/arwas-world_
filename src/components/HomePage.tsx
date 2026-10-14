@@ -15,6 +15,7 @@ import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import BasketProvider from "@/components/BasketProvider";
 import BasketDrawer from "@/components/BasketDrawer";
 import SearchDialog from "@/components/SearchDialog";
+import type { Reel } from "@/components/HeroReel";
 import { getProducts } from "@/lib/catalog";
 import { getSettings } from "@/lib/settings";
 import { DICT, type Lang } from "@/lib/i18n";
@@ -25,6 +26,24 @@ export default async function HomePage({ lang }: { lang: Lang }) {
   const intro = lang === "ar" ? t.hero.intro : settings.heroIntro;
   const blurb = lang === "ar" ? t.footer.blurb : settings.footerBlurb;
   const whatsapp = lang === "ar" ? settings.whatsappOman || settings.whatsapp : settings.whatsapp;
+
+  const reels: Reel[] = products
+    .filter((p) => p.inReel !== false)
+    .flatMap((p) =>
+      (p.media ?? [])
+        .filter((m) => m.kind === "video")
+        .slice(0, 2)
+        .map((m) => ({
+          url: m.url,
+          productId: p.id,
+          name: p.name,
+          tagline: p.tagline,
+          price: p.price ?? null,
+          poster: p.image ?? null,
+        })),
+    )
+    .slice(0, 8);
+
   return (
     <MotionProvider>
       <BasketProvider>
@@ -36,7 +55,7 @@ export default async function HomePage({ lang }: { lang: Lang }) {
         {lang === "en" && <LanguageBanner />}
         <Nav lang={lang} />
         <main id="main" tabIndex={-1} className="outline-none">
-          <Hero intro={intro} lang={lang} />
+          <Hero intro={intro} lang={lang} reels={reels} />
           <Showcase products={products} whatsapp={whatsapp} lang={lang} />
           <Shop products={products} whatsapp={whatsapp} lang={lang} />
           <Craft lang={lang} />

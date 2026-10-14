@@ -65,6 +65,8 @@ export default function Showcase({
   const [productId, setProductId] = useState(products[0]?.id ?? "");
   const [index, setIndex] = useState(0);
   const touchX = useRef<number | null>(null);
+  const tabRow = useRef<HTMLDivElement>(null);
+  const [slide, setSlide] = useState(1);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   useEffect(() => {
@@ -79,6 +81,15 @@ export default function Showcase({
     return () => window.removeEventListener("arwas:select", onSelect);
   }, [products]);
 
+  useEffect(() => {
+    const row = tabRow.current;
+    const el = tabRefs.current[productId];
+    if (!row || !el) return;
+    const rr = row.getBoundingClientRect();
+    const er = el.getBoundingClientRect();
+    row.scrollBy({ left: er.left + er.width / 2 - (rr.left + rr.width / 2), behavior: "smooth" });
+  }, [productId]);
+
   const product = products.find((p) => p.id === productId) ?? products[0];
   if (!product) return null;
 
@@ -88,6 +99,9 @@ export default function Showcase({
   const item = n > 0 ? media[cur] : undefined;
   const go = (d: number) => setIndex((i) => (n === 0 ? 0 : (i + d + n) % n));
   const choose = (id: string) => {
+    const from = products.findIndex((p) => p.id === productId);
+    const to = products.findIndex((p) => p.id === id);
+    setSlide(to >= from ? 1 : -1);
     setProductId(id);
     setIndex(0);
   };
@@ -131,15 +145,16 @@ export default function Showcase({
     <section id="studio" aria-label={t.label} className="px-3 sm:px-6">
       <div className="card mx-auto grid max-w-[1200px] grid-cols-[minmax(0,1fr)] overflow-clip rounded-panel lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <div
+          ref={tabRow}
           role="tablist"
           aria-label={t.tabs}
           onKeyDown={onTabKey}
-          className="col-span-full flex min-w-0 overflow-x-auto border-b border-line px-2 [scrollbar-width:none]"
+          className="relative col-span-full flex min-w-0 gap-1 overflow-x-auto border-b border-line px-2 py-2 [scrollbar-width:none]"
         >
-          {products.map((p) => {
+          {products.map((p, i) => {
             const active = p.id === productId;
             return (
-              <button
+              <motion.button
                 key={p.id}
                 ref={(el) => {
                   tabRefs.current[p.id] = el;
@@ -151,19 +166,29 @@ export default function Showcase({
                 aria-controls="showcase-panel"
                 tabIndex={active ? 0 : -1}
                 onClick={() => choose(p.id)}
-                className={`relative flex min-h-12 flex-none items-center px-4 text-[0.9375rem] transition-colors ${
-                  active ? "font-semibold text-foreground" : "font-medium text-muted hover:text-foreground"
-                }`}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.4, delay: Math.min(i, 8) * 0.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative flex min-h-11 flex-none items-center rounded-full px-4 text-[0.9375rem]"
               >
-                {p.name}
                 {active && (
                   <motion.span
-                    layoutId="showcase-underline"
-                    className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-brand"
-                    transition={{ type: "spring", stiffness: 420, damping: 36 }}
+                    layoutId="tab-pill"
+                    aria-hidden
+                    className="absolute inset-0 rounded-full bg-foreground"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 )}
-              </button>
+                <span
+                  className={`relative transition-colors duration-200 ${
+                    active ? "font-semibold text-background" : "font-medium text-muted hover:text-foreground"
+                  }`}
+                >
+                  {p.name}
+                </span>
+              </motion.button>
             );
           })}
         </div>
@@ -297,10 +322,7 @@ export default function Showcase({
             <AnimatePresence mode="wait">
               <motion.div
                 key={product.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.22 }}
+                initial={{ opacity: 0, x: slide * (rtl ? -1 : 1) * 28 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: slide * (rtl ? 1 : -1) * 28 }} transition={{ duration: 0.3 }}
                 className="flex flex-col gap-4"
               >
                 <h2 className="text-title1 font-semibold tracking-tight">{product.name}</h2>

@@ -96,6 +96,7 @@ export async function saveProduct(id: string | null, formData: FormData): Promis
     media: media.data,
     image: media.data.find((m) => m.kind === "image")?.url ?? "",
     published: formData.get("published") === "on",
+    inReel: formData.get("inReel") === "on",
   };
 
   try {
