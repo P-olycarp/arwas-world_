@@ -9,6 +9,7 @@ import Cta from "@/components/Cta";
 import Footer from "@/components/Footer";
 import MotionProvider from "@/components/MotionProvider";
 import EnquiryTracker from "@/components/EnquiryTracker";
+import OverflowProbe from "@/components/OverflowProbe";
 import LanguageBanner from "@/components/LanguageBanner";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import BasketProvider from "@/components/BasketProvider";
@@ -31,6 +32,7 @@ export default async function HomePage({ lang }: { lang: Lang }) {
           {t.skip}
         </a>
         <EnquiryTracker />
+        <OverflowProbe />
         {lang === "en" && <LanguageBanner />}
         <Nav lang={lang} />
         <main id="main" tabIndex={-1} className="outline-none">
