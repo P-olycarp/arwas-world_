@@ -145,7 +145,7 @@ export default function ProductForm({ id, values }: { id: string | null; values:
 
       <label className="flex min-h-11 items-center gap-3 text-body-lg">
         <input type="checkbox" name="inReel" defaultChecked={values.inReel} className="h-5 w-5" />
-        Show this product's videos in the home page reel
+        Show this product in the home page reel (photos and videos)
       </label>
 
       <label className="flex min-h-11 items-center gap-3 text-body-lg">

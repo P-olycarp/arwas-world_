@@ -29,6 +29,7 @@ export type Product = {
   orderName?: string;
   sizes?: string[];
   inReel?: boolean;
+  addedAt?: number;
   colours?: string[];
 };
 

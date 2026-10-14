@@ -27,22 +27,31 @@ export default async function HomePage({ lang }: { lang: Lang }) {
   const blurb = lang === "ar" ? t.footer.blurb : settings.footerBlurb;
   const whatsapp = lang === "ar" ? settings.whatsappOman || settings.whatsapp : settings.whatsapp;
 
-  const reels: Reel[] = products
-    .filter((p) => p.inReel !== false)
-    .flatMap((p) =>
-      (p.media ?? [])
-        .filter((m) => m.kind === "video")
-        .slice(0, 2)
-        .map((m) => ({
-          url: m.url,
-          productId: p.id,
-          name: p.name,
-          tagline: p.tagline,
-          price: p.price ?? null,
-          poster: p.image ?? null,
-        })),
-    )
-    .slice(0, 8);
+  const latest = [...products]
+    .filter((p) => p.inReel !== false && (p.media?.length ?? 0) > 0)
+    .sort((a, b) => (b.addedAt ?? 0) - (a.addedAt ?? 0))
+    .slice(0, 10);
+  const reels: Reel[] = latest
+    .flatMap((p) => {
+      const video = p.media?.find((m) => m.kind === "video");
+      const image = p.media?.find((m) => m.kind === "image");
+      return [video, image].flatMap((m) =>
+        m
+          ? [
+              {
+                url: m.url,
+                kind: m.kind,
+                productId: p.id,
+                name: p.name,
+                tagline: p.tagline,
+                price: p.price ?? null,
+                thumb: m.kind === "image" ? m.url : (p.image ?? null),
+              } satisfies Reel,
+            ]
+          : [],
+      );
+    })
+    .slice(0, 16);
 
   return (
     <MotionProvider>
