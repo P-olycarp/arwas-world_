@@ -244,3 +244,27 @@ body {
 body:has(dialog[open]) {
   overflow: hidden;
 }
+
+/* Never let any element make the page wider than the screen (Chrome on Android widens the whole layout) */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+fieldset {
+  min-width: 0;
+}
+.grid > * {
+  min-width: 0;
+}
+img,
+video,
+svg,
+canvas {
+  max-width: 100%;
+}
+@media (max-width: 400px) {
+  nav a[href="#main"] {
+    font-size: 1.25rem;
+  }
+}
