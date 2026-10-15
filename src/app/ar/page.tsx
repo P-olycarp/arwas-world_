@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: { absolute: title },
   description,
   alternates: { canonical: "/ar", languages: { en: "/", ar: "/ar" } },
-  openGraph: { title, description, locale: "ar_OM", siteName: "Arwas World", type: "website" },
+  openGraph: { title, description, locale: "ar_OM", siteName: "Arwas World", type: "website", images: [{ url: "/opengraph-image" }] },
 };
 
 export default function Page() {

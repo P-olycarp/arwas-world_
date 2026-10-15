@@ -117,6 +117,8 @@ export async function saveProduct(id: string | null, formData: FormData): Promis
 
   revalidatePath("/");
   revalidatePath("/ar");
+  revalidatePath("/p/[slug]", "page");
+  revalidatePath("/ar/p/[slug]", "page");
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }
@@ -129,6 +131,8 @@ export async function deleteProduct(id: string): Promise<void> {
   }
   revalidatePath("/");
   revalidatePath("/ar");
+  revalidatePath("/p/[slug]", "page");
+  revalidatePath("/ar/p/[slug]", "page");
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }
@@ -155,6 +159,8 @@ export async function seedProducts(): Promise<void> {
   }
   revalidatePath("/");
   revalidatePath("/ar");
+  revalidatePath("/p/[slug]", "page");
+  revalidatePath("/ar/p/[slug]", "page");
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }

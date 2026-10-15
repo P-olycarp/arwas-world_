@@ -5,18 +5,20 @@ export default function Footer({
   whatsapp,
   blurb,
   lang,
+  home = "",
 }: {
   whatsapp: string;
   blurb: string;
   lang: Lang;
+  home?: string;
 }) {
   const d = DICT[lang];
   const t = d.footer;
   const links = [
-    { href: "#studio", label: d.nav.showcase },
-    { href: "#shop", label: d.nav.shop },
-    { href: "#custom", label: d.nav.custom },
-    { href: "#markets", label: d.nav.markets },
+    { href: `${home}#studio`, label: d.nav.showcase },
+    { href: `${home}#shop`, label: d.nav.shop },
+    { href: `${home}#custom`, label: d.nav.custom },
+    { href: `${home}#markets`, label: d.nav.markets },
   ];
   return (
     <footer className="border-t border-line bg-surface">

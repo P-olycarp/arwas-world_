@@ -7,16 +7,16 @@ import { DICT, type Lang } from "@/lib/i18n";
 import { rememberLang } from "@/lib/lang";
 import { useBasket } from "./BasketProvider";
 
-export default function Nav({ lang }: { lang: Lang }) {
+export default function Nav({ lang, home = "", switchHref }: { lang: Lang; home?: string; switchHref?: string }) {
   const t = DICT[lang].nav;
   const b = BDICT[lang].basket;
   const s = BDICT[lang].search;
   const { count, openBasket } = useBasket();
   const links = [
-    { href: "#studio", label: t.showcase },
-    { href: "#shop", label: t.shop },
-    { href: "#custom", label: t.custom },
-    { href: "#markets", label: t.markets },
+    { href: `${home}#studio`, label: t.showcase },
+    { href: `${home}#shop`, label: t.shop },
+    { href: `${home}#custom`, label: t.custom },
+    { href: `${home}#markets`, label: t.markets },
   ];
   const [open, setOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
@@ -35,7 +35,7 @@ export default function Nav({ lang }: { lang: Lang }) {
 
   const switchLink = (extra: string) => (
     <a
-      href={t.switchHref}
+      href={switchHref ?? t.switchHref}
       hrefLang={t.switchLang}
       lang={t.switchLang}
       onClick={() => rememberLang(t.switchLang)}

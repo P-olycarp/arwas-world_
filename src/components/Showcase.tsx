@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import type { Product } from "@/data/products";
 import { DICT, type Lang } from "@/lib/i18n";
 import ProductOptions from "./ProductOptions";
+import ShareButton from "./ShareButton";
 
 const POP = { type: "spring", stiffness: 260, damping: 26 } as const;
 
@@ -385,6 +386,9 @@ export default function Showcase({
               </div>
               <motion.div variants={rowV}>
                 <ProductOptions product={product} lang={lang} />
+                <div className="mt-5">
+                  <ShareButton productId={product.id} name={product.name} lang={lang} />
+                </div>
               </motion.div>
             </motion.div>
           </div>

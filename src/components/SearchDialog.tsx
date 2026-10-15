@@ -166,6 +166,10 @@ export default function SearchDialog({
 
   const pickProduct = (p: Product) => {
     close();
+    if (!document.getElementById("studio")) {
+      window.location.href = `${lang === "ar" ? "/ar" : ""}/p/${p.id}`;
+      return;
+    }
     window.dispatchEvent(new CustomEvent("arwas:select", { detail: p.id }));
     setTimeout(() => document.getElementById("studio")?.scrollIntoView({ behavior: "smooth" }), 0);
   };
@@ -173,7 +177,11 @@ export default function SearchDialog({
     close();
     if (e.action === "basket") setTimeout(openBasket, 0);
     else if (e.action === "external") window.open(waLinkTo(whatsapp, "Hi Arwas World, I have a question."), "_blank", "noopener");
-    else if (e.target) setTimeout(() => document.querySelector(e.target!)?.scrollIntoView({ behavior: "smooth" }), 0);
+    else if (e.target) {
+      const el = document.querySelector(e.target);
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 0);
+      else window.location.href = `${lang === "ar" ? "/ar" : "/"}${e.target}`;
+    }
   };
 
   const total = productHits.length + pageHits.length;

@@ -3,6 +3,7 @@ import { requireAdmin } from "@/lib/auth";
 import { connectDb } from "@/lib/db";
 import { ProductModel } from "@/models/Product";
 import { seedProducts } from "./actions";
+import CopyLink from "@/components/admin/CopyLink";
 
 export const metadata = { title: "Products" };
 export const dynamic = "force-dynamic";
@@ -31,7 +32,7 @@ export default async function ProductsPage() {
         </div>
       ) : (
         <div className="card overflow-x-auto rounded-card">
-          <table className="w-full min-w-[560px] text-left text-body-lg">
+          <table className="w-full min-w-[860px] text-left text-body-lg">
             <caption className="sr-only">All products</caption>
             <thead>
               <tr className="border-b border-line text-body text-muted">
@@ -39,6 +40,7 @@ export default async function ProductsPage() {
                 <th scope="col" className="p-4 font-semibold">Type</th>
                 <th scope="col" className="p-4 font-semibold">Price</th>
                 <th scope="col" className="p-4 font-semibold">Status</th>
+                <th scope="col" className="p-4 font-semibold">Share</th>
               </tr>
             </thead>
             <tbody>
@@ -52,6 +54,7 @@ export default async function ProductsPage() {
                   <td className="p-4 capitalize">{p.kind}</td>
                   <td className="p-4">{p.price || "Request a quote"}</td>
                   <td className="p-4">{p.published ? "Published" : "Hidden"}</td>
+                  <td className="p-4"><CopyLink slug={p.slug} /></td>
                 </tr>
               ))}
             </tbody>
