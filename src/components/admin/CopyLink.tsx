@@ -24,6 +24,9 @@ export default function CopyLink({ slug }: { slug: string }) {
       <button type="button" onClick={() => copy(`/ar/p/${slug}`, "Arabic link")} className="btn btn-secondary !min-h-11 !px-3">
         Copy Arabic link
       </button>
+      <a href={`/story/${slug}?download=1`} download className="btn btn-secondary !min-h-11 !px-3">
+        Story image
+      </a>
       <a href={`/p/${slug}`} target="_blank" rel="noopener noreferrer" className="link inline-flex min-h-11 items-center">
         Open
       </a>
