@@ -16,7 +16,7 @@ export function productMetadata(p: Product, lang: Lang): Metadata {
   const path = `${ar ? "/ar" : ""}/p/${p.id}`;
   const title = `${p.name} | Arwas World`;
   const description = [p.tagline, p.price].filter(Boolean).join(" - ");
-  const image = p.image ?? "/opengraph-image";
+  const image = p.image ? `/og/${p.id}` : "/opengraph-image";
   return {
     title: { absolute: title },
     description,
