@@ -387,7 +387,7 @@ export default function Showcase({
               <motion.div variants={rowV}>
                 <ProductOptions product={product} lang={lang} />
                 <div className="mt-5">
-                  <ShareButton productId={product.id} name={product.name} lang={lang} />
+                  <ShareButton productId={product.id} image={product.image} lang={lang} />
                 </div>
               </motion.div>
             </motion.div>

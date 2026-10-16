@@ -92,7 +92,7 @@ export default async function ProductPageView({ slug, lang }: { slug: string; la
                 </div>
 
                 <ProductOptions product={product} lang={lang} />
-                <ShareButton productId={product.id} name={product.name} lang={lang} />
+                <ShareButton productId={product.id} image={product.image} lang={lang} />
               </div>
             </div>
           </div>

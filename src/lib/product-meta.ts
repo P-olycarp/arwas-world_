@@ -31,7 +31,7 @@ export function productMetadata(p: Product, lang: Lang): Metadata {
       siteName: "Arwas World",
       type: "website",
       locale: ar ? "ar_OM" : "en_KE",
-      images: [{ url: image, alt: p.name }],
+      images: [{ url: image, width: 1200, height: 630, type: "image/jpeg", alt: p.name }],
     },
     twitter: { card: "summary_large_image", title, description, images: [image] },
   };

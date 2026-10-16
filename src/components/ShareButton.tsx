@@ -3,14 +3,16 @@
 import { useEffect, useState } from "react";
 import { Link2, Share2 } from "lucide-react";
 import type { Lang } from "@/lib/i18n";
+import { productLink } from "@/lib/share-link";
 
 export default function ShareButton({
   productId,
-  name,
+  image,
   lang,
 }: {
   productId: string;
-  name: string;
+  name?: string;
+  image?: string;
   lang: Lang;
 }) {
   const ar = lang === "ar";
@@ -21,7 +23,7 @@ export default function ShareButton({
     setCanShare(typeof navigator !== "undefined" && typeof navigator.share === "function");
   }, []);
 
-  const link = () => `${window.location.origin}${ar ? "/ar" : ""}/p/${productId}`;
+  const link = () => productLink(window.location.origin, lang, productId, image);
 
   async function copy() {
     const u = link();
@@ -36,7 +38,7 @@ export default function ShareButton({
 
   async function share() {
     try {
-      await navigator.share({ title: name, url: link() });
+      await navigator.share({ url: link() });
     } catch {
       /* cancelled */
     }

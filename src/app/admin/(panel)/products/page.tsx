@@ -54,7 +54,7 @@ export default async function ProductsPage() {
                   <td className="p-4 capitalize">{p.kind}</td>
                   <td className="p-4">{p.price || "Request a quote"}</td>
                   <td className="p-4">{p.published ? "Published" : "Hidden"}</td>
-                  <td className="p-4"><CopyLink slug={p.slug} /></td>
+                  <td className="p-4"><CopyLink slug={p.slug} image={p.image || undefined} /></td>
                 </tr>
               ))}
             </tbody>

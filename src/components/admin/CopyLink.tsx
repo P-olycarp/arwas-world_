@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { productLink } from "@/lib/share-link";
 
-export default function CopyLink({ slug }: { slug: string }) {
+export default function CopyLink({ slug, image }: { slug: string; image?: string }) {
   const [msg, setMsg] = useState("");
 
-  async function copy(path: string, label: string) {
-    const u = `${window.location.origin}${path}`;
+  async function copy(lang: "en" | "ar", label: string) {
+    const u = productLink(window.location.origin, lang, slug, image);
     try {
       await navigator.clipboard.writeText(u);
       setMsg(`${label} copied.`);
@@ -18,10 +19,10 @@ export default function CopyLink({ slug }: { slug: string }) {
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <button type="button" onClick={() => copy(`/p/${slug}`, "Link")} className="btn btn-secondary !min-h-11 !px-3">
+      <button type="button" onClick={() => copy("en", "Link")} className="btn btn-secondary !min-h-11 !px-3">
         Copy link
       </button>
-      <button type="button" onClick={() => copy(`/ar/p/${slug}`, "Arabic link")} className="btn btn-secondary !min-h-11 !px-3">
+      <button type="button" onClick={() => copy("ar", "Arabic link")} className="btn btn-secondary !min-h-11 !px-3">
         Copy Arabic link
       </button>
       <a href={`/story/${slug}?download=1`} download className="btn btn-secondary !min-h-11 !px-3">
