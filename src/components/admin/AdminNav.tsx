@@ -6,6 +6,7 @@ import { ExternalLink } from "lucide-react";
 
 const TABS = [
   { href: "/admin/products", label: "Products" },
+  { href: "/admin/orders", label: "Orders" },
   { href: "/admin/enquiries", label: "Enquiries" },
   { href: "/admin/settings", label: "Settings" },
 ];
@@ -29,7 +30,8 @@ export default function AdminNav() {
                 {active && <span aria-hidden className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-brand" />}
               </Link>
             </li>
-          ))}
+          );
+        })}
         <li className="flex-none">
           <a href="/" target="_blank" rel="noopener noreferrer" className={`${base} gap-1.5 text-muted hover:text-foreground`}>
             View site

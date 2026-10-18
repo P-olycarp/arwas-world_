@@ -13,6 +13,13 @@ import type { FormState } from "@/lib/form-state";
 
 const text = (max: number) => z.string().trim().max(max);
 
+const money = z
+  .string()
+  .trim()
+  .max(14)
+  .regex(/^(\d+(\.\d{1,3})?)?$/, "Enter prices as plain numbers, for example 1500 or 7.5.")
+  .transform((v) => (v === "" ? null : Number(v)));
+
 const blobUrl = z.string().trim().refine((u) => {
   try {
     const x = new URL(u);
@@ -40,6 +47,8 @@ const schema = z.object({
   priceOmr: text(40),
   sizes: text(100),
   colours: text(150),
+  amountKes: money,
+  amountOmr: money,
   sortOrder: z.coerce.number().int("Sort order must be a whole number.").min(0).max(9999),
 });
 
@@ -66,6 +75,8 @@ export async function saveProduct(id: string | null, formData: FormData): Promis
     priceOmr: get("priceOmr"),
     sizes: get("sizes"),
     colours: get("colours"),
+    amountKes: get("amountKes"),
+    amountOmr: get("amountOmr"),
     sortOrder: get("sortOrder"),
   });
   if (!parsed.success) {

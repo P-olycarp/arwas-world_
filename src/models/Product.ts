@@ -31,6 +31,8 @@ const productSchema = new Schema(
     sizes: { type: String, default: "", trim: true },
     inReel: { type: Boolean, default: true },
     colours: { type: String, default: "", trim: true },
+    amountKes: { type: Number, default: null, min: 0 },
+    amountOmr: { type: Number, default: null, min: 0 },
     image: { type: String, default: "" },
     media: { type: [mediaSchema], default: [] },
     model: { type: String, default: "" },

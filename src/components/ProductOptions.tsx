@@ -33,6 +33,8 @@ export default function ProductOptions({ product, lang }: { product: Product; la
       note: note.trim(),
       qty,
       price: product.price,
+      amount: product.amount,
+      currency: product.currency,
       image: product.image,
     });
     if (result === "full") return setError(t.full);

@@ -21,6 +21,8 @@ export type ProductFormValues = {
   priceOmr: string;
   sizes: string;
   inReel: boolean;
+  amountKes: string;
+  amountOmr: string;
   colours: string;
   media: { kind: "image" | "video"; url: string }[];
 };
@@ -46,6 +48,8 @@ export const EMPTY_PRODUCT: ProductFormValues = {
   priceOmr: "",
   sizes: "",
   inReel: true,
+  amountKes: "",
+  amountOmr: "",
   colours: "",
   media: [],
 };

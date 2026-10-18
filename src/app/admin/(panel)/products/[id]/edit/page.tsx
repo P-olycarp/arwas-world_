@@ -34,6 +34,8 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
     sizes: doc.sizes ?? "",
     inReel: doc.inReel ?? true,
     colours: doc.colours ?? "",
+    amountKes: doc.amountKes == null ? "" : String(doc.amountKes),
+    amountOmr: doc.amountOmr == null ? "" : String(doc.amountOmr),
     image: doc.image ?? "",
     media: (() => {
       const list = (doc.media ?? []).map((m) => ({

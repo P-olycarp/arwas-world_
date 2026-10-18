@@ -2,6 +2,7 @@ import { connectDb } from "@/lib/db";
 import { ProductModel } from "@/models/Product";
 import { PRODUCTS, type MediaItem, type Product } from "@/data/products";
 import { STARTER_AR, type Lang } from "@/lib/i18n";
+import { formatMoney } from "@/lib/order";
 
 type Spec = { label: string; value: string };
 
@@ -57,7 +58,14 @@ export async function getProducts(lang: Lang = "en"): Promise<Product[]> {
         tagline: ar ? d.taglineAr || starter?.tagline || d.tagline : d.tagline,
         description: ar ? d.descriptionAr || starter?.description || d.description : d.description,
         specs: ar ? (arSpecs.length ? arSpecs : starter ? starter.specs : enSpecs) : enSpecs,
-        price: (lang === "ar" ? d.priceOmr || d.price : d.price) || undefined,
+        price:
+          ((lang === "ar" ? d.priceOmr || d.price : d.price) ||
+            ((lang === "ar" ? d.amountOmr : d.amountKes) != null
+              ? formatMoney((lang === "ar" ? d.amountOmr : d.amountKes) as number, lang === "ar" ? "OMR" : "KES")
+              : "")) ||
+          undefined,
+        amount: (lang === "ar" ? d.amountOmr : d.amountKes) ?? undefined,
+        currency: lang === "ar" ? ("OMR" as const) : ("KES" as const),
         image: cover,
         media,
         scale: 1,

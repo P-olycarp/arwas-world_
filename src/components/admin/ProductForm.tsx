@@ -135,6 +135,11 @@ export default function ProductForm({ id, values }: { id: string | null; values:
         </div>
       </fieldset>
 
+      <div className="grid gap-6 sm:grid-cols-2">
+        <Field label="Price number in KES (English site)" name="amountKes" type="number" step="0.01" defaultValue={values.amountKes} help="Used for basket totals. Plain number, for example 1000. Leave empty if you do not want a total." />
+        <Field label="Price number in OMR (Arabic site)" name="amountOmr" type="number" step="0.001" defaultValue={values.amountOmr} help="Plain number, for example 7.5. Leave empty to confirm the total on WhatsApp." />
+      </div>
+
       <Field label="Price" name="price" defaultValue={values.price} maxLength={40} help='Shown as written, for example "From KES 2,500". Leave empty to show "Request a quote".' />
 
       <Field label="Price in OMR (Arabic site, Oman)" name="priceOmr" defaultValue={values.priceOmr} maxLength={40} help='Shown on the Arabic site, for example "From OMR 7". Leave empty to show the main price.' />

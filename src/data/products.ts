@@ -30,6 +30,8 @@ export type Product = {
   sizes?: string[];
   inReel?: boolean;
   addedAt?: number;
+  amount?: number;
+  currency?: "KES" | "OMR";
   colours?: string[];
 };
 
