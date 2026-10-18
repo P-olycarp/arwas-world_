@@ -283,3 +283,14 @@ canvas {
     -webkit-text-fill-color: currentColor;
   }
 }
+
+/* Admin on phones */
+@media (max-width: 639px) {
+  .admin .field {
+    min-height: 48px;
+  }
+  .admin input[type="checkbox"] {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

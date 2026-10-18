@@ -58,7 +58,7 @@ export default function SettingsForm({ values }: { values: SiteSettings }) {
         <p className="text-body text-muted">A short description of the business. Up to 200 characters.</p>
       </div>
 
-      <div className="flex flex-wrap items-center gap-4">
+      <div className="sticky bottom-0 z-10 -mx-4 flex flex-wrap items-center gap-3 border-t border-line bg-surface/95 px-4 py-3 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:p-0">
         <button type="submit" disabled={pending} className="btn btn-primary">
           {pending ? "Saving" : "Save settings"}
         </button>

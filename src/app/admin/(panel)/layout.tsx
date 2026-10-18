@@ -1,29 +1,27 @@
-import Link from "next/link";
+import { LogOut } from "lucide-react";
 import { requireAdmin } from "@/lib/auth";
+import AdminNav from "@/components/admin/AdminNav";
 import { logout } from "../actions";
 
 export default async function PanelLayout({ children }: { children: React.ReactNode }) {
   const session = await requireAdmin();
   return (
     <>
-      <header className="border-b border-line bg-surface">
-        <div className="mx-auto flex min-h-14 max-w-[1100px] flex-wrap items-center justify-between gap-2 px-4 sm:px-6">
-          <nav aria-label="Admin" className="flex items-center gap-1">
-            <span className="mr-3 font-semibold">Arwas World admin</span>
-            <Link href="/admin/products" className="btn btn-subtle !px-3">Products</Link>
-            <Link href="/admin/enquiries" className="btn btn-subtle !px-3">Enquiries</Link>
-            <Link href="/admin/settings" className="btn btn-subtle !px-3">Settings</Link>
-            <Link href="/" target="_blank" rel="noopener noreferrer" className="btn btn-subtle !px-3">
-              View site
-            </Link>
-          </nav>
+      <header className="sticky top-0 z-30 border-b border-line bg-surface/95 backdrop-blur">
+        <div className="mx-auto flex h-14 max-w-[1100px] items-center justify-between gap-3 px-4 sm:px-6">
+          <span className="font-semibold">Arwas World admin</span>
           <form action={logout} className="flex items-center gap-3">
-            <span className="hidden text-body text-muted sm:inline">{session.email}</span>
-            <button type="submit" className="btn btn-secondary !px-4">Sign out</button>
+            <span className="hidden max-w-[16rem] truncate text-body text-muted md:inline">{session.email}</span>
+            <button type="submit" className="btn btn-secondary !px-3">
+              <LogOut size={18} aria-hidden />
+              <span className="hidden sm:inline">Sign out</span>
+              <span className="sr-only sm:hidden">Sign out</span>
+            </button>
           </form>
         </div>
+        <AdminNav />
       </header>
-      <main id="main" className="admin mx-auto max-w-[1100px] px-4 py-8 sm:px-6">
+      <main id="main" className="admin mx-auto max-w-[1100px] px-4 py-6 sm:px-6 sm:py-8">
         {children}
       </main>
     </>
